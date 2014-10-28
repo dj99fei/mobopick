@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.handmark.pulltorefresh.extras.viewpager"
         minSdkVersion 4
-        targetSdkVersion 4
+        targetSdkVersion 19
     }
 
     buildTypes {
