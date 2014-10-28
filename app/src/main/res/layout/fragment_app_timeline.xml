@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.cyou.mobopick.fragment.AppTimelineFragment">
+
+    <include
+        layout="@layout/include_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:id="@id/pager_backgroud"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@id/cross_fader_content">
+        <com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager
+            android:id="@+id/pager"
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/rhythm_layout_height"
+            android:layout_marginTop="50.0dp"
+            ptr:ptrDrawable="@drawable/loading_1"
+            ptr:ptrMode="both"
+            ptr:ptrScrollingWhileRefreshingEnabled="false"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rhythm_layout_height"
+            android:layout_alignParentBottom="true"
+            />
+
+        </RelativeLayout>
+
+</RelativeLayout>

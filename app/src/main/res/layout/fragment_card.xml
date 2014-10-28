@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:id="@id/root"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@id/image_bottom_edge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/topic_bottom_edge_margin"
+        android:layout_marginRight="@dimen/topic_bottom_edge_margin"
+        android:background="@drawable/subject_bg"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@id/box_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/card_margin"
+        android:background="@drawable/home_card_bg">
+
+        <RelativeLayout
+            android:id="@+id/box_title"
+            android:layout_width="match_parent"
+            android:layout_height="80.0dip">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15.0dip"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@id/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:lines="1"
+                    android:textColor="@color/black"
+                    android:textSize="22.0sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@id/text_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="@color/color_zhonghui"
+                    android:textSize="16.0sp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@id/download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15.0dp"
+                android:src="@drawable/ic_download"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@id/image_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/box_title"
+            android:adjustViewBounds="true"
+            android:background="@color/backColor"
+            android:scaleType="fitStart"/>
+
+        <TextView
+            android:id="@+id/text_bravos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/image_cover"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15.0dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/card_flower_bg"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/card_flower"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"/>
+
+        <com.cyou.mobopick.view.HtmlTextView
+            android:id="@id/text_digest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_cover"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.25"
+            android:linksClickable="true"
+            android:paddingBottom="20.0dip"
+            android:paddingLeft="20.0dip"
+            android:paddingRight="20.0dip"
+            android:paddingTop="15.0dip"
+            android:textColor="@color/color_zhonghui"
+            android:textSize="16.0sp"/>
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MoboPick</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_blank">BlankActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="start">Get started</string>
+    <string name="dialog_title_update">Update</string>
+    <string name="dialog_msg_update">Mobo Pick just got better! A new version available.</string>
+    <string name="dialog_button_update_positive">Update</string>
+    <string name="dialog_button_update_negative">Maybe later</string>
+    <string name="instruction_1">Bought a new smart phone, you feel so happy!!!</string>
+    <string name="instruction_2">But dozens of apps for same purposes, which one is better?</string>
+    <string name="instruction_3">IT editors, apps fans senior users... pick the best for you.</string>
+    <string name="instruction_4">Share your favorites discover fans favorites</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+
+</resources>

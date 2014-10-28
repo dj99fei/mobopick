@@ -1,0 +1,20 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+
+    <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html -->
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="num_date">36.0sp</dimen>
+    <dimen name="word_date">22.0sp</dimen>
+    <dimen name="rhythm_layout_height">90.0dip</dimen>
+    <dimen name="rhythm_item_height">60.0dip</dimen>
+    <dimen name="topic_bottom_edge_margin">15.0dip</dimen>
+    <dimen name="card_margin">5.0dip</dimen>
+    <dimen name="rhythm_icon_padding">2.0dip</dimen>
+    <dimen name="rhythm_item_padding">2.0dip</dimen>
+    <dimen name="rhythm_icon_margin">5.0dip</dimen>
+    <dimen name="actionbar_time_second_min_width">25dip</dimen>
+    <dimen name="icon_size">56dp</dimen>
+</resources>

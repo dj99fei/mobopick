@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@id/app_abstract_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
+        <ImageView
+            android:id="@id/icon"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Large"
+            android:id="@id/text_app_name"
+            android:layout_toRightOf="@id/icon"
+            android:layout_marginRight="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/text_app_name"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/text_app_name"
+            android:textAppearance="@style/TextAppearance.Small"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Medium"
+            android:id="@id/app_abstract"
+            />
+    </RelativeLayout>
+    <TextView
+        android:id="@id/divider_1"
+        android:layout_below="@id/app_abstract_layout"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.Divider.Horizontal"/>
+</RelativeLayout>
+
