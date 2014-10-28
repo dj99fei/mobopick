@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         applicationId "com.cyou.mobopick"
@@ -34,7 +34,6 @@ android {
     }
 
 
-
 }
 
 dependencies {
@@ -56,6 +55,8 @@ dependencies {
     compile 'com.android.support:support-v4:20.0.0'
     compile 'org.lucasr.twowayview:core:1.0.0-SNAPSHOT@aar'
     compile 'org.lucasr.twowayview:layouts:1.0.0-SNAPSHOT@aar'
+    compile 'com.squareup.picasso:picasso:2.3.4'
     compile 'com.google.code.gson:gson:2.3'
-    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile files('libs/libGoogleAnalyticsServices.jar')
+    compile files('libs/baidu_android_api_3_5.jar')
 }
