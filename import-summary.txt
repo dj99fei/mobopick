@@ -7,13 +7,21 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
-From PullToRefreshViewPager:
 * ant.properties
+* extra-viewpager.iml
 * pom.xml
 * proguard-project.txt
-From library:
-* LICENSE
-* pom.xml
+* target/
+* target/generated-sources/
+* target/generated-sources/r/
+* target/generated-sources/r/com/
+* target/generated-sources/r/com/handmark/
+* target/generated-sources/r/com/handmark/pulltorefresh/
+* target/generated-sources/r/com/handmark/pulltorefresh/extras/
+* target/generated-sources/r/com/handmark/pulltorefresh/extras/viewpager/
+* target/generated-sources/r/com/handmark/pulltorefresh/extras/viewpager/BuildConfig.java
+* target/generated-sources/r/com/handmark/pulltorefresh/extras/viewpager/Manifest.java
+* target/generated-sources/r/com/handmark/pulltorefresh/extras/viewpager/R.java
 
 Replaced Jars with Dependencies:
 --------------------------------
@@ -32,11 +40,6 @@ Moved Files:
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-In library:
-* AndroidManifest.xml => library/src/main/AndroidManifest.xml
-* res/ => library/src/main/res/
-* src/ => library/src/main/java/
-In PullToRefreshViewPager:
 * AndroidManifest.xml => pullToRefreshViewPager/src/main/AndroidManifest.xml
 * res/ => pullToRefreshViewPager/src/main/res/
 * src/ => pullToRefreshViewPager/src/main/java/

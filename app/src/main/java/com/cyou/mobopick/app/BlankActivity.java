@@ -17,7 +17,7 @@ public class BlankActivity extends BaseActivity implements AppTimelineFragment.O
         setContentView(R.layout.activity_blank);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, AppTimelineFragment.newInstance("", ""))
+                .replace(R.id.content_frame, AppTimelineFragment.newInstance())
                 .commit();
     }
 

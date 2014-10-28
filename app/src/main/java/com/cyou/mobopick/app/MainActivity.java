@@ -2,7 +2,7 @@ package com.cyou.mobopick.app;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
@@ -11,7 +11,7 @@ import com.cyou.mobopick.fragment.AppTimelineFragment;
 import com.cyou.mobopick.fragment.NavigationDrawerFragment;
 import com.cyou.mobopick.util.LogUtils;
 
-public class MainActivity extends BaseActivity implements NavigationDrawerFragment. NavigationDrawerCallbacks, AppTimelineFragment.OnFragmentInteractionListener {
+public class MainActivity extends CommonActivity implements NavigationDrawerFragment. NavigationDrawerCallbacks, AppTimelineFragment.OnFragmentInteractionListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     /**
@@ -28,15 +28,7 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        LogUtils.d(TAG, "main oncreate");
         setActionBar();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, AppTimelineFragment.newInstance("", ""))
-                .commit();
-
 
 //        mNavigationDrawerFragment = (NavigationDrawerFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -50,6 +42,16 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
 //        Request request = new CheckUpdateRequest(this);
 //        MyVolley.getRequestQueue().add()
+    }
+
+    @Override
+    int getContentViewId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    Fragment getFragment() {
+        return AppTimelineFragment.newInstance();
     }
 
     private void setActionBar() {

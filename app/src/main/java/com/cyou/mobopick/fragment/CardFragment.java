@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cyou.mobopick.R;
+import com.cyou.mobopick.app.AppDetailActivity;
 import com.cyou.mobopick.domain.AppModel;
 import com.cyou.mobopick.util.Constant;
 import com.cyou.mobopick.util.LogUtils;
@@ -129,11 +130,11 @@ public class CardFragment extends BaseFragment {
             Intent downloadIntent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(downloadIntent);
         }
-//        if (v.getId() == R.id.root) {
-//            Intent intent = new Intent(getActivity(), AppDetailActivity.class);
-//            intent.putExtra(Constant.INTENT_KEY.APPMODEL, appModel);
-//            getActivity().startActivity(intent);
-//        }
+        if (v.getId() == R.id.root) {
+            Intent intent = new Intent(getActivity(), AppDetailActivity.class);
+            intent.putExtra(Constant.INTENT_KEY.APPMODEL, appModel);
+            getActivity().startActivity(intent);
+        }
     }
 
     private void resizeImageView() {
