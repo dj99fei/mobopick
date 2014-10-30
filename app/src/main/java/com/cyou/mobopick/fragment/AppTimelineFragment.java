@@ -2,6 +2,7 @@ package com.cyou.mobopick.fragment;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -30,10 +30,10 @@ import com.cyou.mobopick.domain.DeviceInfo;
 import com.cyou.mobopick.net.AppTimelineRequest;
 import com.cyou.mobopick.net.NetworkRequestListener;
 import com.cyou.mobopick.util.AnimatorUtils;
+import com.cyou.mobopick.util.AppTheme;
 import com.cyou.mobopick.util.ColorUtils;
 import com.cyou.mobopick.util.LogUtils;
 import com.cyou.mobopick.util.RhythmManager;
-import com.cyou.mobopick.view.ViewPagerScroller;
 import com.cyou.mobopick.volley.MyVolley;
 import com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -41,7 +41,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import org.lucasr.twowayview.TwoWayLayoutManager;
 import org.lucasr.twowayview.widget.ListLayoutManager;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +76,6 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
     private OnFragmentInteractionListener mListener;
     private CardAppPagerAdapter cardAdapter;
     private List<AppModel> appModels = new ArrayList<AppModel>();
-    private String[] bgColorStrs = new String[]{"#5a63ad", "#00adce", "#ff9c21", "#4294ef", "#22dabe", "#1094a5", "#f07079", "#f0cc3e", "#40c7db"};
     private int pageCurrent = 1;
     private AppModelListResult result;
 
@@ -129,11 +127,7 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
         mViewPager = mPullToRefreshViewPager.getRefreshableView();
         mViewPager.setOnPageChangeListener(this);
         mPullToRefreshViewPager.setOnRefreshListener(this);
-        setViewPagerScrollSpeed(mViewPager, 400);
-
-
         layoutManager = new ListLayoutManager(getActivity(), TwoWayLayoutManager.Orientation.HORIZONTAL);
-
         rhythmManager = new RhythmManager(layoutManager, recyclerView);
         recyclerView.setItemViewCacheSize(10);
         recyclerView.setLayoutManager(layoutManager);
@@ -189,28 +183,9 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
 
     }
 
-    private void setViewPagerScrollSpeed(ViewPager paramViewPager, int paramInt) {
-        try {
-            Field localField = ViewPager.class.getDeclaredField("mScroller");
-            localField.setAccessible(true);
-            ViewPagerScroller localViewPagerScroller = new ViewPagerScroller(paramViewPager.getContext(), new OvershootInterpolator(0.6F));
-            localField.set(paramViewPager, localViewPagerScroller);
-            localViewPagerScroller.setDuration(paramInt);
-            return;
-        } catch (IllegalAccessException localIllegalAccessException) {
-        } catch (IllegalArgumentException localIllegalArgumentException) {
-        } catch (NoSuchFieldException localNoSuchFieldException) {
-        }
-    }
-
     @Override
     public void onClick(View view) {
-//        if (view != null) {
-//            AnimatorUtils.showUpAndDownBounce(view, (int) (adapter.getItemWidth() / 6), 180, 0);
-//        }
         if (view.getId() == R.id.btn_rocket_to_head) {
-//            recyclerView.smoothScrollToPosition(0);
-//            onPageSelected(0);
             mViewPager.setCurrentItem(0);
         }
     }
@@ -222,23 +197,24 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
         float currentCompent = 1.0f - nextCompent;
         String nextColorStr = null;
         if (positionOffsetPixels > 0 && position + 1 < mViewPager.getAdapter().getCount()) {
-            nextColorStr = bgColorStrs[(position + 1) % bgColorStrs.length];
+            nextColorStr = AppTheme.getBgColorString(position + 1);
         } else if (position - 1 > 0) {
-            nextColorStr = bgColorStrs[(position - 1) % bgColorStrs.length];
+            nextColorStr = AppTheme.getBgColorString(position - 1);
         }
-        String curColorStr = bgColorStrs[position % bgColorStrs.length];
+        String curColorStr = AppTheme.getBgColorString(position);
         if (nextColorStr == null) {
             nextColorStr = "#000000";
         }
         int mixedColor = ColorUtils.mixColor(Color.parseColor(curColorStr), Color.parseColor(nextColorStr), currentCompent);
         pagerBackgroud.setBackgroundColor(mixedColor);
+        bar.setBackgroundDrawable(new ColorDrawable(mixedColor));
     }
 
 
     @Override
     public void onPageSelected(final int position) {
 
-
+        AppTheme.setCurBgColorStr(position);
         adapter.setCurrentPosition(position, layoutManager, recyclerView);
         AppModel appModel = appModels.get(position);
         dayText.setText(appModel.getCreateDay());

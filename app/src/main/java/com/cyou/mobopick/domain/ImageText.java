@@ -3,13 +3,22 @@ package com.cyou.mobopick.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by chengfei on 14-10-24.
  */
 public class ImageText implements Parcelable {
 
-    public String text;
+    public List<String> texts;
     public String imageUrl;
+
+    public ImageText(List<String> texts, String imageUrl) {
+        this.texts = texts;
+        this.imageUrl = imageUrl;
+    }
+
 
     @Override
     public int describeContents() {
@@ -18,16 +27,16 @@ public class ImageText implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.text);
+        dest.writeStringList(texts);
         dest.writeString(this.imageUrl);
     }
 
-    public ImageText() {
-    }
-
     private ImageText(Parcel in) {
-        this.text = in.readString();
+        this.texts = new ArrayList<String>();
+        in.readStringList(this.texts);
         this.imageUrl = in.readString();
+
+
     }
 
     public static final Creator<ImageText> CREATOR = new Creator<ImageText>() {

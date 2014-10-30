@@ -83,7 +83,6 @@ public class RhythmAdapter extends RecyclerView.Adapter<RhythmAdapter.ListItemVi
 
     @Override
     public void onBindViewHolder(final ListItemViewHolder viewHolder,final int position) {
-        AppModel model = mAppModels.get(position);
         final RelativeLayout itemLayout = (RelativeLayout) viewHolder.itemView;
         final RelativeLayout iconLayout = (RelativeLayout) itemLayout.getChildAt(0);
         RelativeLayout.LayoutParams itemLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -149,18 +148,6 @@ public class RhythmAdapter extends RecyclerView.Adapter<RhythmAdapter.ListItemVi
             super(itemView);
             ButterKnife.inject(this, itemView);
         }
-    }
-
-    public float getItemWidth() {
-        return itemWidth;
-    }
-
-    public float getItemHeight() {
-        return itemHeight;
-    }
-
-    public int getCurrentPosition() {
-        return currentPosition;
     }
 
     public void setCurrentPosition(final int currentPosition, final ListLayoutManager layoutManager, final RecyclerView recyclerView) {

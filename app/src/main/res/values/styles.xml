@@ -4,13 +4,16 @@
     <style name="Widget.AppCompat.ActionBar.MoboPickActionBar">
         <item name="background">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="windowActionBarOverlay">true</item>
+        <!--<item name="windowActionBarOverlay">true</item>-->
         <item name="homeAsUpIndicator">@drawable/ic_back</item>
-        <item name="android:windowActionBarOverlay">true</item>
+        <!--<item name="android:windowActionBarOverlay">true</item>-->
         <item name="android:titleTextStyle">@style/TextAppearance.AppCompat.Widget.Base.ActionBar.Title.Inverse</item>
         <item name="backgroundSplit">@android:color/transparent</item>
         <item name="android:backgroundSplit">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
+        <item name="displayOptions">showHome|homeAsUp|showTitle</item>
+        <item name="android:icon">@android:color/transparent</item>
     </style>
 
     <style name="TextAppearance.AppCompat.Widget.ActionBar.Title.MoboPickTitle">
@@ -25,21 +28,29 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@null</item>
-        <item name="android:textAppearance">@style/TextAppearance.Medium.White</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
     </style>
 
     <style name="TextAppearance" parent="@android:style/TextAppearance"></style>
 
+
+    <style name="TextView" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@null</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+    </style>
     <style name="TextAppearance.Large">
         <item name="android:textSize">22dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="TextAppearance.Medium">
         <item name="android:textSize">18dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="TextAppearance.Small">
         <item name="android:textSize">15dp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.Medium.White">

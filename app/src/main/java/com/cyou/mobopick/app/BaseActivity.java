@@ -4,6 +4,7 @@ package com.cyou.mobopick.app;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -32,7 +33,9 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityFeatu
             UpdateDialogFragment fragment = UpdateDialogFragment.newInstance();
             fragment.show(getSupportFragmentManager(), null);
         }
+
     }
+
 
     @Override
     public void setShowProgress(boolean show) {
@@ -91,5 +94,14 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityFeatu
     @Override
     public boolean hasDestroyed() {
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

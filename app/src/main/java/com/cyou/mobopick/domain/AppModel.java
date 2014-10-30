@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +72,16 @@ public class AppModel implements Parcelable {
     public String oppose;
     public String filesize;
     public String size;
+
+
+    /**
+     * 评论对应表情数量
+     */
+    public int accepted;
+    public int joy;
+    public int surprised;
+    public int rejected;
+    public int fearful;
 
 
 
@@ -233,5 +244,35 @@ public class AppModel implements Parcelable {
         }
 
         return imageText;
+    }
+
+
+    public String getSizeAndViews() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(size).append(" | ").append(MyApplication.getInstance().getString(R.string.views_total, views)).toString();
+        return builder.toString();
+    }
+
+    public List<EmojiComment> getEmobjiComment() {
+        List<EmojiComment> comments = new ArrayList<EmojiComment>();
+        comments.add(new EmojiComment(R.string.emoji_accepted, R.drawable.emoji_comment_accepted, accepted));
+        comments.add(new EmojiComment(R.string.emoji_joy, R.drawable.emoji_comment_joy, joy));
+        comments.add(new EmojiComment(R.string.emoji_surprised, R.drawable.emoji_comment_surprised, surprised));
+        comments.add(new EmojiComment(R.string.emoji_rejected, R.drawable.emoji_comment_rejected, rejected));
+        comments.add(new EmojiComment(R.string.emoji_fearful, R.drawable.emoji_comment_fearul, fearful));
+        return comments;
+    }
+
+    public class EmojiComment {
+
+        public int label;
+        public int drawable;
+        public int totalNum;
+
+        public EmojiComment(int label, int drawable, int totalNum) {
+            this.label = label;
+            this.drawable = drawable;
+            this.totalNum = totalNum;
+        }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">MoboPick</string>
     <string name="title_section1">Section 1</string>
@@ -24,5 +24,13 @@
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="click_to_view">Click to view</string>
+    
+    <string name="emoji_accepted">Accepted</string>
+    <string name="emoji_joy">Joy</string>
+    <string name="emoji_surprised">Surprised</string>
+    <string name="emoji_rejected">Rejected</string>
+    <string name="emoji_fearful">Fearful</string>
+    <string name="views_total"><xliff:g>%1$s</xliff:g> views</string>
 
 </resources>

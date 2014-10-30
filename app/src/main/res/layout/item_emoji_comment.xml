@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2.0dip">
+
+    <TextView
+        android:id="@id/text_emoji_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/emoji_comment_accepted"
+        android:text="@string/emoji_accepted"
+        android:minWidth="@dimen/emoji_content_min_width"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Small"
+        android:drawablePadding="5dp"
+        android:adjustViewBounds="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/text_emoji_comment_num"
+        android:layout_below="@id/text_emoji_comment"
+        android:text="23"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="@style/TextAppearance.Small"/>
+</RelativeLayout>

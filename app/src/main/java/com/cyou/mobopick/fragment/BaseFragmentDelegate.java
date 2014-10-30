@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cyou.mobopick.R;
+import com.cyou.mobopick.app.AppDetailActivity;
 import com.cyou.mobopick.app.BaseActivity;
 import com.cyou.mobopick.app.BaseActivityFeature;
 import com.cyou.mobopick.app.BlankActivity;
@@ -43,6 +44,7 @@ public class BaseFragmentDelegate implements BaseFragmentFeature, FragmentLifecy
         flipToBackMask.add(BlankActivity.class.getName());
         flipToBackMask.add(MainActivity.class.getName());
         flipToBackMask.add(EntryActivity.class.getName());
+        flipToBackMask.add(AppDetailActivity.class.getName());
     }
     public BaseFragmentDelegate(BaseFragment fragment) {
         this.fragment = fragment;

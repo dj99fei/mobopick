@@ -17,4 +17,15 @@
     <dimen name="rhythm_icon_margin">5.0dip</dimen>
     <dimen name="actionbar_time_second_min_width">25dip</dimen>
     <dimen name="icon_size">56dp</dimen>
+
+
+    <dimen name="layout_inner_padding_horizontal">15dp</dimen>
+    <dimen name="layout_inner_padding_vertical">10dp</dimen>
+
+    <dimen name="layout_padding_horizontal">18dp</dimen>
+    <dimen name="layout_padding_vertical">18dp</dimen>
+    <dimen name="layout_detail_header_height">100dp</dimen>
+    <dimen name="detail_image_thumb_height">140dp</dimen>
+    <dimen name="emoji_content_min_width">80dp</dimen>
+    <dimen name="emoji_content_min_height">80dp</dimen>
 </resources>

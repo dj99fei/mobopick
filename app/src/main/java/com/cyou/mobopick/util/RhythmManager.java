@@ -29,16 +29,16 @@ public class RhythmManager {
 //        for (int i = 0 ;i < ITEM_COUNT + 1; i ++) {
 //            int firstVisiblePosition = layoutManager.getFirstVisiblePosition();
 //            LogUtils.d(TAG, "position = %s", (i + firstVisiblePosition));
-//            if (recyclerView.getChildAt(i + firstVisiblePosition) != null) {
-//                AnimatorUtils.showUpAndDownBounce(recyclerView.getChildAt(i + firstVisiblePosition),
+//            if (imageSetRecyclerView.getChildAt(i + firstVisiblePosition) != null) {
+//                AnimatorUtils.showUpAndDownBounce(imageSetRecyclerView.getChildAt(i + firstVisiblePosition),
 //                        Math.max(Math.abs(position - i - layoutManager.getFirstVisiblePosition()) * (int) (base/ 6.0f), 10), 180,0);
 //            }
 //        }
 
 
 //        for (int i = layoutManager.getFirstVisiblePosition(); i < layoutManager.getFirstVisiblePosition() + ITEM_COUNT; i++) {
-//            if (recyclerView.getChildAt(i) != null) {
-//                AnimatorUtils.showUpAndDownBounce(recyclerView.getChildAt(i),
+//            if (imageSetRecyclerView.getChildAt(i) != null) {
+//                AnimatorUtils.showUpAndDownBounce(imageSetRecyclerView.getChildAt(i),
 //                        Math.max(Math.abs(position - i - layoutManager.getFirstVisiblePosition()) * (int) (base/ 6.0f), 10), 180,0);
 //            }
 //        }
@@ -49,16 +49,16 @@ public class RhythmManager {
 //                    if (i != position) {
 //                        final int other = i;
 //                        LogUtils.d(TAG, "position = %s ", other);
-//                        if (recyclerView.getChildAt(other) != null) {
+//                        if (imageSetRecyclerView.getChildAt(other) != null) {
 //
-//                            AnimatorUtils.showUpAndDownBounce(recyclerView.getChildAt(other), (int) (base * 0.8f) , 350, 0);
+//                            AnimatorUtils.showUpAndDownBounce(imageSetRecyclerView.getChildAt(other), (int) (base * 0.8f) , 350, 0);
 //                        }
 //                    }
 //                }
 //            }
 //        }, 200L);
-//        if (recyclerView.getChildAt(position) != null) {
-//            AnimatorUtils.showUpAndDownBounce(recyclerView.getChildAt(position), 10, 350, 0);
+//        if (imageSetRecyclerView.getChildAt(position) != null) {
+//            AnimatorUtils.showUpAndDownBounce(imageSetRecyclerView.getChildAt(position), 10, 350, 0);
 //        }
 //        vibrate(20l);
     }
