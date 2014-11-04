@@ -6,9 +6,13 @@ import android.text.TextUtils;
 
 import com.cyou.mobopick.MyApplication;
 import com.cyou.mobopick.R;
+import com.cyou.mobopick.util.AppTheme;
 import com.cyou.mobopick.util.CalenderUtils;
 import com.cyou.mobopick.util.Constant;
 import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +38,8 @@ public class AppModel implements Parcelable {
     public String coverImageUrl;
     @SerializedName(value = "post_time")
     public String createdTime;
+    @SerializedName(value = "start_time")
+    public String startTime;
     public String digest;
     @SerializedName(value = "thumb")
     public String iconUrl;
@@ -56,101 +62,34 @@ public class AppModel implements Parcelable {
 
     public String views;
 
-    public String favorites;
-
     @SerializedName(value = "json_data")
     public String imageTextJson;
     private List<ImageText> imageText;
 
-    public String creative;
-    public String usability;
-    @SerializedName(value = "interface")
-    public String interface_;
-    public String smooth;
-    public String functionality;
-    public String support;
-    public String oppose;
-    public String filesize;
+
+    @SerializedName(value = "filesize")
     public String size;
 
 
     /**
      * 评论对应表情数量
      */
+    @SerializedName(value = "creative")
     public int accepted;
+    @SerializedName(value = "usability")
     public int joy;
+    @SerializedName(value = "interface")
     public int surprised;
+    @SerializedName(value = "smooth")
     public int rejected;
+    @SerializedName(value = "functionality")
     public int fearful;
 
+    public int themeColor;
 
 
     public AppModel() {
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.appSize);
-        dest.writeString(this.authorAvatarUrl);
-        dest.writeString(this.authorCareer);
-        dest.writeInt(this.authorId);
-        dest.writeString(this.authorName);
-        dest.writeInt(this.commentTimes);
-        dest.writeString(this.content);
-        dest.writeString(this.coverImageUrl);
-        dest.writeString(this.createdTime);
-        dest.writeString(this.digest);
-        dest.writeString(this.iconUrl);
-        dest.writeInt(this.id);
-        dest.writeByte(isFavored ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.minSdkVer);
-        dest.writeString(this.packageName);
-        dest.writeInt(this.showTimes);
-        dest.writeString(this.subTitle);
-        dest.writeString(this.title);
-        dest.writeInt(this.upTimes);
-        dest.writeString(this.updatedTime);
-        dest.writeInt(this.upNum);
-    }
-
-    private AppModel(Parcel in) {
-        this.appSize = in.readString();
-        this.authorAvatarUrl = in.readString();
-        this.authorCareer = in.readString();
-        this.authorId = in.readInt();
-        this.authorName = in.readString();
-        this.commentTimes = in.readInt();
-        this.content = in.readString();
-        this.coverImageUrl = in.readString();
-        this.createdTime = in.readString();
-        this.digest = in.readString();
-        this.iconUrl = in.readString();
-        this.id = in.readInt();
-        this.isFavored = in.readByte() != 0;
-        this.minSdkVer = in.readInt();
-        this.packageName = in.readString();
-        this.showTimes = in.readInt();
-        this.subTitle = in.readString();
-        this.title = in.readString();
-        this.upTimes = in.readInt();
-        this.updatedTime = in.readString();
-        this.upNum = in.readInt();
-    }
-
-    public static final Creator<AppModel> CREATOR = new Creator<AppModel>() {
-        public AppModel createFromParcel(Parcel source){
-            return new AppModel(source);
-        }
-
-        public AppModel[] newArray(int size) {
-            return new AppModel[size];
-        }
-    };
 
     public String getIconUrl() {
         return new StringBuilder(Constant.getBaseUrl()).append(iconUrl).toString();
@@ -165,7 +104,8 @@ public class AppModel implements Parcelable {
 //        2014-09-24 11:04:19
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            Date date = format.parse(createdTime);
+            String base = TextUtils.isEmpty(startTime) ? createdTime : startTime;
+            Date date = format.parse(base);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             return calendar;
@@ -255,11 +195,11 @@ public class AppModel implements Parcelable {
 
     public List<EmojiComment> getEmobjiComment() {
         List<EmojiComment> comments = new ArrayList<EmojiComment>();
-        comments.add(new EmojiComment(R.string.emoji_accepted, R.drawable.emoji_comment_accepted, accepted));
-        comments.add(new EmojiComment(R.string.emoji_joy, R.drawable.emoji_comment_joy, joy));
-        comments.add(new EmojiComment(R.string.emoji_surprised, R.drawable.emoji_comment_surprised, surprised));
-        comments.add(new EmojiComment(R.string.emoji_rejected, R.drawable.emoji_comment_rejected, rejected));
-        comments.add(new EmojiComment(R.string.emoji_fearful, R.drawable.emoji_comment_fearul, fearful));
+        comments.add(new EmojiComment(R.string.emoji_accepted, R.drawable.emoji_comment_accepted, accepted, "creative"));
+        comments.add(new EmojiComment(R.string.emoji_joy, R.drawable.emoji_comment_joy, joy, "usability"));
+        comments.add(new EmojiComment(R.string.emoji_surprised, R.drawable.emoji_comment_surprised, surprised, "interface"));
+        comments.add(new EmojiComment(R.string.emoji_rejected, R.drawable.emoji_comment_rejected, rejected, "smooth"));
+        comments.add(new EmojiComment(R.string.emoji_fearful, R.drawable.emoji_comment_fearul, fearful, "functionality"));
         return comments;
     }
 
@@ -268,11 +208,127 @@ public class AppModel implements Parcelable {
         public int label;
         public int drawable;
         public int totalNum;
+        public String interfaceName;
 
-        public EmojiComment(int label, int drawable, int totalNum) {
+        public EmojiComment(int label, int drawable, int totalNum, String interfaceName) {
             this.label = label;
             this.drawable = drawable;
             this.totalNum = totalNum;
+            this.interfaceName = interfaceName;
         }
     }
+
+    public List<ImageText> getImageTexts() {
+        List<ImageText> imageTexts = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(imageTextJson);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONArray itemArrays = jsonArray.getJSONArray(i);
+                String imageUrl = itemArrays.getString(0);
+                String text = itemArrays.getString(1);
+                imageTexts.add(new ImageText(text, imageUrl));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return imageTexts;
+    }
+
+    public int getThemeColor() {
+        if (themeColor == 0) {
+            themeColor = AppTheme.getCurBgColor();
+        }
+        return themeColor;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.appSize);
+        dest.writeString(this.authorAvatarUrl);
+        dest.writeString(this.authorCareer);
+        dest.writeInt(this.authorId);
+        dest.writeString(this.authorName);
+        dest.writeInt(this.commentTimes);
+        dest.writeString(this.content);
+        dest.writeString(this.coverImageUrl);
+        dest.writeString(this.createdTime);
+        dest.writeString(this.startTime);
+        dest.writeString(this.digest);
+        dest.writeString(this.iconUrl);
+        dest.writeInt(this.id);
+        dest.writeByte(isFavored ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.minSdkVer);
+        dest.writeString(this.packageName);
+        dest.writeInt(this.showTimes);
+        dest.writeString(this.subTitle);
+        dest.writeString(this.title);
+        dest.writeInt(this.upTimes);
+        dest.writeString(this.updatedTime);
+        dest.writeInt(this.upNum);
+        dest.writeString(this.downloadUrl);
+        dest.writeString(this.tags);
+        dest.writeString(this.views);
+        dest.writeString(this.imageTextJson);
+        dest.writeList(imageText);
+        dest.writeString(this.size);
+        dest.writeInt(this.accepted);
+        dest.writeInt(this.joy);
+        dest.writeInt(this.surprised);
+        dest.writeInt(this.rejected);
+        dest.writeInt(this.fearful);
+        dest.writeInt(this.themeColor);
+    }
+
+    private AppModel(Parcel in) {
+        this.appSize = in.readString();
+        this.authorAvatarUrl = in.readString();
+        this.authorCareer = in.readString();
+        this.authorId = in.readInt();
+        this.authorName = in.readString();
+        this.commentTimes = in.readInt();
+        this.content = in.readString();
+        this.coverImageUrl = in.readString();
+        this.createdTime = in.readString();
+        this.startTime = in.readString();
+        this.digest = in.readString();
+        this.iconUrl = in.readString();
+        this.id = in.readInt();
+        this.isFavored = in.readByte() != 0;
+        this.minSdkVer = in.readInt();
+        this.packageName = in.readString();
+        this.showTimes = in.readInt();
+        this.subTitle = in.readString();
+        this.title = in.readString();
+        this.upTimes = in.readInt();
+        this.updatedTime = in.readString();
+        this.upNum = in.readInt();
+        this.downloadUrl = in.readString();
+        this.tags = in.readString();
+        this.views = in.readString();
+        this.imageTextJson = in.readString();
+        this.imageText = in.readArrayList(ClassLoader.getSystemClassLoader());
+        this.size = in.readString();
+        this.accepted = in.readInt();
+        this.joy = in.readInt();
+        this.surprised = in.readInt();
+        this.rejected = in.readInt();
+        this.fearful = in.readInt();
+        this.themeColor = in.readInt();
+    }
+
+    public static final Creator<AppModel> CREATOR = new Creator<AppModel>() {
+        public AppModel createFromParcel(Parcel source) {
+            return new AppModel(source);
+        }
+
+        public AppModel[] newArray(int size) {
+            return new AppModel[size];
+        }
+    };
 }

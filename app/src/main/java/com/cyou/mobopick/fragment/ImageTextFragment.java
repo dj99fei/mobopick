@@ -5,9 +5,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.cyou.mobopick.R;
 import com.cyou.mobopick.domain.ImageText;
 import com.cyou.mobopick.util.Constant;
+import com.squareup.picasso.Picasso;
+
+import butterknife.InjectView;
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
+import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
 /**
  * Created by chengfei on 14-10-24.
@@ -19,7 +26,12 @@ import com.cyou.mobopick.util.Constant;
 public class ImageTextFragment extends BaseFragment {
     private boolean hasText;
 
+    @InjectView(R.id.image)
+    protected ImageViewTouch imageView;
+    @InjectView(R.id.text)
+    protected TextView textView;
     private ImageText imageText;
+
 
     public static ImageTextFragment newInstance(ImageText imageText) {
         Bundle args = new Bundle();
@@ -37,12 +49,15 @@ public class ImageTextFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_image_text, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
+        Picasso.with(getActivity()).load(imageText.getImageUrl()).into(imageView);
+        textView.setText(imageText.text);
     }
 
 }

@@ -17,7 +17,7 @@ android {
     }
 
     signingConfigs {
-        myConfig{
+        myConfig {
             storeFile file("mobopick.keystore")
             storePassword "mobopick"
             keyAlias "mobopick"
@@ -28,16 +28,17 @@ android {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig  signingConfigs.myConfig
+            signingConfig signingConfigs.myConfig
 
         }
     }
 
-	compileOptions {
-		        sourceCompatibility JavaVersion.VERSION_1_7
-					        targetCompatibility JavaVersion.VERSION_1_7
-							    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/anim'] } }
 }
 
 dependencies {
@@ -47,13 +48,14 @@ dependencies {
     //    compile 'org.lucasr.twowayview:twowayview:0.1.1'
     //    compile 'org.lucasr.twowayview:twowayview:0.1.1'
     compile files('libs/libGoogleAnalyticsServices.jar')
-    compile 'com.android.support:recyclerview-v7:21.0.0'
+    compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.mcxiaoke.volley:library:1.0.6'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.navercorp.volleyextensions:volley-extensions:1.1.+'
+    compile 'it.sephiroth.android.library.imagezoom:imagezoom:+'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.8.+'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:support-v4:20.0.0'

@@ -5,13 +5,14 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Vibrator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -82,15 +83,15 @@ public class RhythmAdapter extends RecyclerView.Adapter<RhythmAdapter.ListItemVi
 
 
     @Override
-    public void onBindViewHolder(final ListItemViewHolder viewHolder,final int position) {
+    public void onBindViewHolder(final ListItemViewHolder viewHolder, final int position) {
         final RelativeLayout itemLayout = (RelativeLayout) viewHolder.itemView;
-        final RelativeLayout iconLayout = (RelativeLayout) itemLayout.getChildAt(0);
-        RelativeLayout.LayoutParams itemLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        int itemMargin = resource.getDimensionPixelOffset(R.dimen.rhythm_item_padding);
-        itemLayoutParams.leftMargin = itemMargin;
-        itemLayoutParams.rightMargin = itemMargin;
-        itemLayout.setLayoutParams(itemLayoutParams);
-        if (itemHeight <= 0) {
+        final LinearLayout iconLayout = (LinearLayout) itemLayout.getChildAt(0);
+//        RelativeLayout.LayoutParams itemLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 120);
+//        int itemMargin = resource.getDimensionPixelOffset(R.dimen.rhythm_item_padding);
+//        itemLayoutParams.leftMargin = itemMargin;
+//        itemLayoutParams.rightMargin = itemMargin;
+//        itemLayout.setLayoutParams(itemLayoutParams);
+        if (itemWidth <= 0) {
             itemLayout.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
@@ -112,14 +113,22 @@ public class RhythmAdapter extends RecyclerView.Adapter<RhythmAdapter.ListItemVi
     int delta = (int) (itemHeight * 0.12f);
 
     private List<Target> targets = new ArrayList<Target>();
-    private void layout(RelativeLayout iconLayout, ListItemViewHolder viewHolder, int position) {
-        int newWidth = (int) itemWidth - 2 * resource.getDimensionPixelSize(R.dimen.rhythm_icon_padding);
-        iconLayout.setLayoutParams(new RelativeLayout.LayoutParams(newWidth, resource.getDimensionPixelSize(R.dimen.rhythm_item_height) - 2 * resource.getDimensionPixelSize(R.dimen.rhythm_icon_padding)));
-        int j = newWidth - 2 * resource.getDimensionPixelSize(R.dimen.rhythm_icon_padding);
-        ViewGroup.LayoutParams localLayoutParams = viewHolder.icon.getLayoutParams();
-        localLayoutParams.width = j;
-        localLayoutParams.height = j;
-        viewHolder.icon.setLayoutParams(localLayoutParams);
+
+    private void layout(LinearLayout iconLayout, ListItemViewHolder viewHolder, int position) {
+//        final RelativeLayout itemLayout = (RelativeLayout) viewHolder.itemView;
+//        RelativeLayout.LayoutParams itemLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        int itemMargin = resource.getDimensionPixelOffset(R.dimen.rhythm_item_padding);
+//        itemLayoutParams.leftMargin = itemMargin;
+//        itemLayoutParams.rightMargin = itemMargin;
+//        itemLayout.setLayoutParams(itemLayoutParams);
+
+//        int newWidth = (int) itemWidth - 2 * resource.getDimensionPixelSize(R.dimen.rhythm_icon_padding);
+//        iconLayout.setLayoutParams(new RelativeLayout.LayoutParams(newWidth, resource.getDimensionPixelSize(R.dimen.rhythm_item_height) - 2 * resource.getDimensionPixelSize(R.dimen.rhythm_icon_padding)));
+//        int j = newWidth - 2 * resource.getDimensionPixelSize(R.dimen.rhythm_icon_padding);
+//        ViewGroup.LayoutParams localLayoutParams = viewHolder.icon.getLayoutParams();
+//        localLayoutParams.width = j;
+//        localLayoutParams.height = j;
+//        viewHolder.icon.setLayoutParams(localLayoutParams);
         LogUtils.d(TAG, "layout position: %s", position);
         if (position == currentPosition) {
             AnimatorUtils.showUpAndDownBounce(viewHolder.itemView, (int) (itemHeight * unselectRatio), (int)( Math.max(Math.abs(currentPosition - position) * delta + itemHeight * selectRatio, itemHeight * selectRatio)), (int) (itemHeight * selectRatio), 1000, 0);
@@ -127,11 +136,11 @@ public class RhythmAdapter extends RecyclerView.Adapter<RhythmAdapter.ListItemVi
         } else {
             AnimatorUtils.showUpAndDownBounce(viewHolder.itemView, (int) (itemHeight * unselectRatio), (int)( Math.max(Math.abs(currentPosition - position) * delta + itemHeight * selectRatio, itemHeight * selectRatio)),(int) (itemHeight * unselectRatio), 1000, 0);
         }
-        MyTarget myTarget = new MyTarget(viewHolder.itemView, position);
-        targets.add(myTarget);
-        Picasso.with(context).load(bgs[position % bgs.length]).into(myTarget);
+//        MyTarget myTarget = new MyTarget(viewHolder.itemView, position);
+//        targets.add(myTarget);
+//        Picasso.with(context).load(bgs[position % bgs.length]).into(myTarget);
+        iconLayout.setBackgroundResource(bgs[position % bgs.length]);
         Picasso.with(context).load(mAppModels.get(position).getIconUrl()).into(viewHolder.icon);
-        viewHolder.itemView.setTag(mAppModels.get(position).getIconUrl());
     }
 
 
@@ -150,14 +159,31 @@ public class RhythmAdapter extends RecyclerView.Adapter<RhythmAdapter.ListItemVi
         }
     }
 
-    public void setCurrentPosition(final int currentPosition, final ListLayoutManager layoutManager, final RecyclerView recyclerView) {
+    public void setCurrentPosition(final int currentPosition, LinearLayoutManager layoutManager, final RecyclerView recyclerView) {
+
+        int base = -1;
+        try {
+            int first = layoutManager.findFirstCompletelyVisibleItemPosition();
+            int offset = 0;
+            if ( currentPosition > first) {
+                offset = 2;
+            } else if (currentPosition < first){
+                offset = 2;
+            }
+            base = (int) ((currentPosition - (first  + offset)) * itemWidth);
+        } catch (Exception e) {
+        }
+        if (base == -1) {
+            base = (int) (itemWidth * (currentPosition - this.currentPosition));
+        }
+//        recyclerView.smoothScrollToPosition(Math.max(0, currentPosition - 3));
+//        recyclerView.smoothScrollBy((int) (itemWidth * (currentPosition - this.currentPosition)), 0);
+        recyclerView.smoothScrollBy(base, 0);
         this.currentPosition = currentPosition;
-        recyclerView.smoothScrollToPosition(currentPosition - currentPosition % 6);
+//        recyclerView.smoothScrollToPosition(currentPosition - currentPosition % (layoutManager.findLastVisibleItemPosition() - layoutManager.findFirstVisibleItemPosition()));
         delta = (int) (itemHeight * 0.12f);
         notifyDataSetChanged();
-    }
-    private void vibrate(long paramLong) {
-        ((Vibrator) MyApplication.getInstance().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(new long[]{0L, paramLong}, -1);
+//        recyclerView.setAdapter(this);
     }
 
 

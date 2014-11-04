@@ -4,18 +4,25 @@
                 android:layout_height="wrap_content"
                 android:padding="2.0dip">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/emoji_comment_accepted"
+        android:id="@id/image"/>
     <TextView
         android:id="@id/text_emoji_comment"
         android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/emoji_comment_accepted"
+        android:layout_below="@id/image"
         android:text="@string/emoji_accepted"
         android:minWidth="@dimen/emoji_content_min_width"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.Small"
-        android:drawablePadding="5dp"
-        android:adjustViewBounds="true"/>
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

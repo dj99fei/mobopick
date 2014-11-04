@@ -15,6 +15,7 @@ import com.cyou.mobopick.app.BlankActivity;
 import com.cyou.mobopick.app.Crossfader;
 import com.cyou.mobopick.app.EntryActivity;
 import com.cyou.mobopick.app.FragmentLifecycleCabllbacks;
+import com.cyou.mobopick.app.ImageTextActivity;
 import com.cyou.mobopick.app.MainActivity;
 import com.cyou.mobopick.util.Constant;
 import com.cyou.mobopick.util.MyGestureHelper;
@@ -45,6 +46,7 @@ public class BaseFragmentDelegate implements BaseFragmentFeature, FragmentLifecy
         flipToBackMask.add(MainActivity.class.getName());
         flipToBackMask.add(EntryActivity.class.getName());
         flipToBackMask.add(AppDetailActivity.class.getName());
+        flipToBackMask.add(ImageTextActivity.class.getName());
     }
     public BaseFragmentDelegate(BaseFragment fragment) {
         this.fragment = fragment;

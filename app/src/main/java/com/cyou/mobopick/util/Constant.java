@@ -16,6 +16,7 @@ public class Constant {
         public static final String TEXT = "intent_key_text";
         public static final String IMAGE_TEXT = "intent_key_image_text";
         public static final String IMAGE_TEXT_LIST = "intent_key_image_text_list";
+        public static final String POSITION = "intent_key_position";
 
     }
 

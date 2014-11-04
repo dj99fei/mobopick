@@ -9,6 +9,7 @@
     <dimen name="num_date">36.0sp</dimen>
     <dimen name="word_date">22.0sp</dimen>
     <dimen name="rhythm_layout_height">90.0dip</dimen>
+    <dimen name="rhythm_layout_width">60.0dip</dimen>
     <dimen name="rhythm_item_height">60.0dip</dimen>
     <dimen name="topic_bottom_edge_margin">15.0dip</dimen>
     <dimen name="card_margin">5.0dip</dimen>
@@ -27,5 +28,6 @@
     <dimen name="layout_detail_header_height">100dp</dimen>
     <dimen name="detail_image_thumb_height">140dp</dimen>
     <dimen name="emoji_content_min_width">80dp</dimen>
-    <dimen name="emoji_content_min_height">80dp</dimen>
+    <dimen name="emoji_content_min_height">110dp</dimen>
+    <dimen name="image_text_text_min_height">60dp</dimen>
 </resources>

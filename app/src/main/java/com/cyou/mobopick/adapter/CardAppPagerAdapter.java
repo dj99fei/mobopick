@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.cyou.mobopick.domain.AppModel;
 import com.cyou.mobopick.fragment.CardFragment;
+import com.cyou.mobopick.util.AppTheme;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,15 +24,6 @@ public class CardAppPagerAdapter extends FragmentStatePagerAdapter {
         super(paramFragmentManager);
         this.appmodels = paramList;
 //        generateFragment(paramList);
-    }
-
-    private void generateFragment(List<AppModel> paramList) {
-
-        Iterator localIterator = appmodels.iterator();
-        while (localIterator.hasNext()) {
-            AppModel localAppModel = (AppModel)localIterator.next();
-            this.mFragments.add(CardFragment.getInstance(localAppModel));
-        }
     }
 
     public void addAppModels(List<AppModel> paramList) {
@@ -59,6 +51,7 @@ public class CardAppPagerAdapter extends FragmentStatePagerAdapter {
 
     public Fragment getItem(int paramInt) {
         AppModel app = appmodels.get(paramInt);
+        app.themeColor = AppTheme.getBgColor(paramInt);
         return CardFragment.getInstance(app);
     }
 

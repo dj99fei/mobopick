@@ -17,7 +17,7 @@ public abstract  class CommonActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         actionBar.setBackgroundDrawable(new ColorDrawable(AppTheme.getCurBgColor()));
         setContentView(getContentViewId());
-        getSupportFragmentManager().beginTransaction().add(R.id.content_frame, getFragment()).disallowAddToBackStack().commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, getFragment()).disallowAddToBackStack().commit();
     }
 
     abstract Fragment getFragment();

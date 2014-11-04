@@ -2,24 +2,23 @@ package com.cyou.mobopick.util;
 
 import android.content.Context;
 import android.os.Vibrator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.cyou.mobopick.MyApplication;
-
-import org.lucasr.twowayview.widget.ListLayoutManager;
 
 /**
  * Created by chengfei on 14-10-13.
  */
 public class RhythmManager {
 
-    private ListLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     public static final int ITEM_COUNT = 5;
     private static final String TAG = RhythmManager.class.getSimpleName();
 
 
-    public RhythmManager(ListLayoutManager layoutManager, RecyclerView recyclerView) {
+    public RhythmManager(LinearLayoutManager layoutManager, RecyclerView recyclerView) {
         this.layoutManager = layoutManager;
         this.recyclerView = recyclerView;
     }

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,9 +39,6 @@ import com.cyou.mobopick.util.RhythmManager;
 import com.cyou.mobopick.volley.MyVolley;
 import com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-
-import org.lucasr.twowayview.TwoWayLayoutManager;
-import org.lucasr.twowayview.widget.ListLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +67,7 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     GestureDetectorCompat gestureDetector;
-    ListLayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
     RhythmAdapter adapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -127,12 +126,14 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
         mViewPager = mPullToRefreshViewPager.getRefreshableView();
         mViewPager.setOnPageChangeListener(this);
         mPullToRefreshViewPager.setOnRefreshListener(this);
-        layoutManager = new ListLayoutManager(getActivity(), TwoWayLayoutManager.Orientation.HORIZONTAL);
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rhythmManager = new RhythmManager(layoutManager, recyclerView);
         recyclerView.setItemViewCacheSize(10);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(false);
         recyclerView.setHorizontalFadingEdgeEnabled(false);
+        recyclerView.setScrollBarDefaultDelayBeforeFade(100);
+        recyclerView.setActivated(false);
         // allows for optimizations if all items are of the same size:
         recyclerView.setHasFixedSize(true);
         recyclerView.smoothScrollToPosition(0);
@@ -145,7 +146,7 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
         cardAdapter = new CardAppPagerAdapter(getActivity().getSupportFragmentManager(), appModels);
         mViewPager.setAdapter(cardAdapter);
         adapter = new RhythmAdapter(appModels);
-        adapter.setItemWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth() / RhythmManager.ITEM_COUNT);
+//        adapter.setItemWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth() / RhythmManager.ITEM_COUNT);
         recyclerView.setAdapter(adapter);
         load(pageCurrent);
     }
@@ -215,7 +216,7 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
     public void onPageSelected(final int position) {
 
         AppTheme.setCurBgColorStr(position);
-        adapter.setCurrentPosition(position, layoutManager, recyclerView);
+        adapter.setCurrentPosition(position,layoutManager, recyclerView);
         AppModel appModel = appModels.get(position);
         dayText.setText(appModel.getCreateDay());
         toHeadButton.setVisibility(View.VISIBLE);
@@ -236,6 +237,8 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
     @Override
     public void onErrorResponse(VolleyError error) {
         mPullToRefreshViewPager.onRefreshComplete();
+        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+        setShowProgress(false);
         //TODO add error prompt
     }
 
@@ -296,12 +299,12 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+
             if (view == null) {
                 return super.onSingleTapConfirmed(e);
             }
-
-            final int clickedChild = recyclerView.indexOfChild(view);
-            mViewPager.setCurrentItem(clickedChild + layoutManager.getFirstVisiblePosition(), true);
+            final int clickedChild = recyclerView.indexOfChild(view) + layoutManager.findFirstVisibleItemPosition();
+            mViewPager.setCurrentItem(clickedChild, true);
             return true;
         }
 

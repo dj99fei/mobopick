@@ -1,12 +1,8 @@
 package com.cyou.mobopick.domain;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cyou.mobopick.MyApplication;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Comparator;
@@ -81,14 +77,17 @@ public class Version implements Comparator<Version>, Parcelable {
 
     private static void initVersion() {
         version = new Version();
-        Context context = MyApplication.getInstance();
-        try {
-            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            version.versionName = pi.versionName;
-            version.versionCode = pi.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+//        Context context = MyApplication.getInstance();
+//        try {
+//            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+//            version.versionName = pi.versionName;
+//            version.versionCode = pi.versionCode;
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//            version.versionCode = 2;
+//        }
+        version.versionCode = 2;
+        version.versionName = "v1.0.1";
     }
 
     public static Version getLastestVersion() {

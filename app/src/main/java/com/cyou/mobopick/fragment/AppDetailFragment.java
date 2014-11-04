@@ -1,5 +1,8 @@
 package com.cyou.mobopick.fragment;
 
+import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
@@ -10,17 +13,24 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.cyou.mobopick.R;
 import com.cyou.mobopick.adapter.EmojiCommentAdapter;
+import com.cyou.mobopick.adapter.ImageTextAdapter;
+import com.cyou.mobopick.app.ImageTextActivity;
 import com.cyou.mobopick.domain.AppModel;
 import com.cyou.mobopick.net.AppDetailRequest;
+import com.cyou.mobopick.net.EmojiCommentRequest;
 import com.cyou.mobopick.net.NetworkRequestListener;
 import com.cyou.mobopick.util.Constant;
 import com.cyou.mobopick.volley.MyVolley;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.squareup.picasso.Picasso;
 
 import org.lucasr.twowayview.TwoWayLayoutManager;
@@ -42,7 +52,8 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
 
     @InjectView(R.id.recyclerview_emoji_comment)
     protected RecyclerView emojiCommentRecyclerView;
-    GestureDetectorCompat gestureDetector;
+    GestureDetectorCompat emojiCommentsGustreDetctor;
+    GestureDetectorCompat iamgeSetGustreDetctor;
     @InjectView(R.id.text_app_name)
     protected TextView appnameText;
     @InjectView(R.id.text_size_and_view)
@@ -53,6 +64,8 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
     protected TextView appdesText;
     @InjectView(R.id.text_tigs)
     protected TextView tigsText;
+    @InjectView(R.id.download)
+    protected ImageView downloadImage;
 
     private List<AppModel.EmojiComment> emojiComments = new ArrayList<AppModel.EmojiComment>();
     private EmojiCommentAdapter emojiCommentAdapter;
@@ -89,9 +102,11 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
         initRecyclerView(emojiCommentRecyclerView);
         emojiCommentAdapter = new EmojiCommentAdapter(emojiComments);
         emojiCommentRecyclerView.setAdapter(emojiCommentAdapter);
-        gestureDetector =
-                new GestureDetectorCompat(getActivity(), new RecyclerViewDemoOnGestureListener());
-
+        emojiCommentsGustreDetctor =
+                new GestureDetectorCompat(getActivity(), new RecyclerViewDemoOnGestureListener(emojiCommentRecyclerView));
+        iamgeSetGustreDetctor = new GestureDetectorCompat(getActivity(), new RecyclerViewDemoOnGestureListener(imageSetRecyclerView));
+        downloadImage.setOnClickListener(this);
+        ((GradientDrawable)downloadImage.getBackground()).setColor(appModel.getThemeColor());
     }
 
     private void initRecyclerView(RecyclerView recyclerView) {
@@ -130,32 +145,96 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
         emojiComments.clear();
         emojiComments.addAll(appModel.getEmobjiComment());
         emojiCommentAdapter.notifyDataSetChanged();
+        appModel.getImageText();
+        imageSetRecyclerView.setAdapter(new ImageTextAdapter(appModel.getImageTexts()));
     }
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-        gestureDetector.onTouchEvent(motionEvent);
+        if (recyclerView.getId() == R.id.recyclerview_emoji_comment) {
+            emojiCommentsGustreDetctor.onTouchEvent(motionEvent);
+        } else if (recyclerView.getId() == R.id.recyclerview_image_set) {
+            iamgeSetGustreDetctor.onTouchEvent(motionEvent);
+        }
         return false;
     }
 
     @Override
     public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-
     }
 
-    private class RecyclerViewDemoOnGestureListener extends GestureDetector.SimpleOnGestureListener {
+    private class RecyclerViewDemoOnGestureListener extends GestureDetector.SimpleOnGestureListener implements NetworkRequestListener<AppModel.EmojiComment> {
+
+        private RecyclerView recyclerView;
+
+        private RecyclerViewDemoOnGestureListener(RecyclerView recyclerView) {
+            this.recyclerView = recyclerView;
+        }
+
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-//            View view = imageSetRecyclerView.findChildViewUnder(e.getX(), e.getY());
-//            if (view == null) {
-//                return super.onSingleTapConfirmed(e);
-//            }
-//            final int clickedChild = imageSetRecyclerView.indexOfChild(view);
+            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+            final int clickedChild = recyclerView.indexOfChild(view) + ((ListLayoutManager) recyclerView.getLayoutManager()).getFirstVisiblePosition();
 //            return true;
+            if (recyclerView.getId() == R.id.recyclerview_emoji_comment) {
+                AppModel.EmojiComment comment = emojiComments.get(clickedChild);
+                StringBuilder builder = new StringBuilder(EmojiCommentRequest.URL);
+                builder.append(comment.interfaceName);
+                builder.append("/");
+                builder.append(appModel.id);
+                MyVolley.getRequestQueue().add(new EmojiCommentRequest(comment, builder.toString(), this));
+                ImageView emojiImageView = (ImageView) view.findViewById(R.id.image);
+//                emojiImageView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.scale_overal));
+                AnimatorSet set1 = new AnimatorSet();
+                set1.setDuration(200);
+                set1.playTogether(ObjectAnimator.ofFloat(emojiImageView, "scaleX", 1.0f, 1.2f), ObjectAnimator.ofFloat(emojiImageView, "scaleY", 1.0f, 1.2f));
+                AnimatorSet set2 = new AnimatorSet();
+                set2.setDuration(100);
+                set2.playTogether(ObjectAnimator.ofFloat(emojiImageView, "scaleX", 1.2f, 1.0f), ObjectAnimator.ofFloat(emojiImageView, "scaleY", 1.2f, 1.0f));
+//                ObjectAnimator animator = ;
+                AnimatorSet set = new AnimatorSet();
+                set.setInterpolator(new OvershootInterpolator());
+                set.playSequentially(set1, set2);
+                set.start();
+                return true;
+
+            }
+
+            if (recyclerView.getId() == R.id.recyclerview_image_set) {
+                Intent intent = new Intent(getActivity(), ImageTextActivity.class);
+                intent.putExtra(Constant.INTENT_KEY.POSITION, clickedChild);
+                intent.putParcelableArrayListExtra(Constant.INTENT_KEY.IMAGE_TEXT_LIST, (ArrayList<? extends android.os.Parcelable>) appModel.getImageTexts());
+                startActivity(intent);
+                return true;
+            }
             return false;
         }
+
         public void onLongPress(MotionEvent e) {
             super.onLongPress(e);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+
+        }
+
+        @Override
+        public void onResponse(AppModel.EmojiComment response) {
+            response.totalNum = response.totalNum + 1;
+            recyclerView.getAdapter().notifyDataSetChanged();
+            Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == R.id.download) {
+            Uri uri = Uri.parse(appModel.downloadUrl);
+            Intent downloadIntent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(downloadIntent);
         }
     }
 }

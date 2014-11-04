@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cyou.mobopick.R;
@@ -39,8 +40,9 @@ public class EmojiCommentAdapter extends  RecyclerView.Adapter<EmojiCommentAdapt
     public void onBindViewHolder(EmojiCommentAdapter.ListItemViewHolder listItemViewHolder, int i) {
         AppModel.EmojiComment comment = emojiComments.get(i);
         listItemViewHolder.emojiCommentText.setText(comment.label);
-        listItemViewHolder.emojiCommentText.setCompoundDrawablesWithIntrinsicBounds(0, comment.drawable, 0, 0);
         listItemViewHolder.numText.setText(String.valueOf(comment.totalNum));
+        listItemViewHolder.emojiImageView.setImageResource(comment.drawable);
+        listItemViewHolder.itemView.setClickable(true);
     }
 
     @Override
@@ -53,6 +55,8 @@ public class EmojiCommentAdapter extends  RecyclerView.Adapter<EmojiCommentAdapt
         TextView emojiCommentText;
         @InjectView(R.id.text_emoji_comment_num)
         TextView numText;
+        @InjectView(R.id.image)
+        ImageView emojiImageView;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);

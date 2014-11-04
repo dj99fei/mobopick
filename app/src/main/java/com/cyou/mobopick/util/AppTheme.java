@@ -17,6 +17,10 @@ public class AppTheme {
         return bgColorStrs[(position % bgColorStrs.length)];
     }
 
+    public static int getBgColor(int position) {
+        return Color.parseColor(getBgColorString(position));
+    }
+
     public static String curBgColorStr;
 
 

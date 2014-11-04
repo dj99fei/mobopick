@@ -1,139 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center_vertical"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+    >
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/layout_padding_vertical"
-            android:paddingTop="@dimen/layout_padding_vertical">
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include
-            layout="@layout/include_loading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/layout_padding_vertical"
+        android:paddingTop="@dimen/layout_padding_vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@id/cross_fader_content"
-            >
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/include_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <RelativeLayout
-                android:id="@id/layout_detail_header"
+                android:id="@id/cross_fader_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin">
+                >
 
-                <ImageView
-                    android:id="@id/icon"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
-                    android:src="@drawable/ic_launcher"
-                    />
-
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@id/layout_detail_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
-                    android:layout_toRightOf="@id/icon"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin">
 
-                    <TextView
-                        android:id="@id/text_app_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="dolphin browser"
-                        android:textAppearance="@style/TextAppearance.Large"
+                    <ImageView
+                        android:id="@id/icon"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
+                        android:src="@drawable/ic_launcher"
                         />
 
-                    <TextView
-                        android:id="@id/text_size_and_view"
+                    <ImageView
+                        android:id="@+id/download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@id/text_app_name"
-                        android:layout_marginTop="@dimen/layout_inner_padding_vertical"
-                        android:text="2.3M | 2345 views"
-                        android:textAppearance="@style/TextAppearance.Small"
-                        />
-                </LinearLayout>
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15.0dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@drawable/ic_download"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
+                        android:layout_toLeftOf="@id/download"
+                        android:layout_toRightOf="@id/icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@id/text_app_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="dolphin browser"
+                            android:textAppearance="@style/TextAppearance.Large"
+                            />
+
+                        <TextView
+                            android:id="@id/text_size_and_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/text_app_name"
+                            android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                            android:text="2.3M | 2345 views"
+                            android:textAppearance="@style/TextAppearance.Small"
+                            />
+                    </LinearLayout>
 
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-            <TextView
-                android:id="@id/text_tigs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout_detail_header"
-                android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
-                android:layout_marginRight="@dimen/layout_inner_padding_horizontal"
-                android:layout_marginTop="@dimen/layout_inner_padding_vertical"
-                android:ellipsize="end"
-                android:text="Yes\uff01That classic VLC."
-                />
+                <TextView
+                    android:id="@id/text_tigs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_detail_header"
+                    android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
+                    android:layout_marginRight="@dimen/layout_inner_padding_horizontal"
+                    android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                    android:ellipsize="end"
+                    android:text="Yes\uff01That classic VLC."
+                    />
 
 
-            <TextView
-                android:id="@id/divider_1"
-                style="@style/Widget.Divider.Horizontal"
-                android:layout_below="@id/text_tigs"
-                android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@id/divider_1"
+                    style="@style/Widget.Divider.Horizontal"
+                    android:layout_below="@id/text_tigs"
+                    android:layout_marginTop="20dp"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@id/recyclerview_image_set"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_image_thumb_height"
-                android:layout_below="@id/divider_1"
-                android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
-                android:layout_marginRight="@dimen/layout_inner_padding_horizontal"
-                android:layout_marginTop="@dimen/layout_inner_padding_vertical"
-                />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/recyclerview_image_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_image_thumb_height"
+                    android:layout_below="@id/divider_1"
+                    android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
+                    android:layout_marginRight="@dimen/layout_inner_padding_horizontal"
+                    android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                    />
 
-            <TextView
-                android:id="@+id/click_to_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recyclerview_image_set"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/layout_inner_padding_vertical"
-                android:text="@string/click_to_view"
-                android:textAppearance="@style/TextAppearance.Small"/>
+                <TextView
+                    android:id="@+id/click_to_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recyclerview_image_set"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                    android:text="@string/click_to_view"
+                    android:textAppearance="@style/TextAppearance.Small"/>
 
-            <TextView
-                android:id="@id/divider_2"
-                style="@style/Widget.Divider.Horizontal"
-                android:layout_below="@id/click_to_view"
-                android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@id/divider_2"
+                    style="@style/Widget.Divider.Horizontal"
+                    android:layout_below="@id/click_to_view"
+                    android:layout_marginTop="20dp"/>
 
-            <TextView
-                android:id="@id/text_appdes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/divider_2"
-                android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
-                android:layout_marginRight="@dimen/layout_inner_padding_horizontal"
-                android:layout_marginTop="@dimen/layout_inner_padding_vertical"
-                android:ellipsize="end"
-                android:text="The long wait for most famous open source cross-platform multimedia player that c
+                <TextView
+                    android:id="@id/text_appdes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider_2"
+                    android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
+                    android:layout_marginRight="@dimen/layout_inner_padding_horizontal"
+                    android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                    android:ellipsize="end"
+                    android:text="The long wait for most famous open source cross-platform multimedia player that c
         an play almost any video format. Now they brought to light VLC for Android. For hackers and power users a    nd support open source."
-                />
+                    />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@id/recyclerview_emoji_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="@dimen/emoji_content_min_height"
-                android:layout_below="@id/text_appdes"
-                android:layout_marginTop="@dimen/layout_padding_vertical"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/recyclerview_emoji_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_appdes"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/emoji_content_min_height"
+                    />
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
 
-
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

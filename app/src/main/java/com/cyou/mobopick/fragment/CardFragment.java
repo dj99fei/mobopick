@@ -1,6 +1,7 @@
 package com.cyou.mobopick.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -119,6 +120,7 @@ public class CardFragment extends BaseFragment {
             LogUtils.d(TAG, "height has got %s", height);
             this.mDigestText.setText(appModel.content);
         }
+        ((GradientDrawable)mDownloadImageView.getBackground()).setColor(appModel.getThemeColor());
         rootView.setOnClickListener(this);
         Picasso.with(getActivity()).load(appModel.getCoverImageUrl()).into(mCoverImageView, callback);
     }

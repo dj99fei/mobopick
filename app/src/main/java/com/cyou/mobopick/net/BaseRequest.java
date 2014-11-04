@@ -22,7 +22,9 @@ import java.util.Map;
 public abstract class BaseRequest<T> extends JsonRequest<T> {
 
 
-    public static final String BASE_URL = "http://www.mobo123.com/static/api/";
+    public static final String HOST = "http://www.mobo123.com/";
+    public static final String BASE_URL = HOST + "static/api/";
+
     private static final String TAG = BaseRequest.class.getSimpleName();
 
     public BaseRequest(String url, String requestBody, NetworkRequestListener<T> listener) {
@@ -41,6 +43,7 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
             return Response.success(result, HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             LogUtils.d(TAG, jsonString);
+            LogUtils.e(TAG, e);
             return Response.error(new ParseError(e));
         }
     }

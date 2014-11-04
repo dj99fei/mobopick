@@ -46,4 +46,5 @@
     <item type="id" name="text_appdes"/>
     <item type="id" name="text_emoji_comment"/>
     <item type="id" name="text_emoji_comment_num"/>
+    <item type="id" name="item_image"/>
 </resources>

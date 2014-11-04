@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cyou.mobopick.R;
+import com.cyou.mobopick.adapter.ImageTextPagerAdapter;
 import com.cyou.mobopick.domain.ImageText;
 import com.cyou.mobopick.util.Constant;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.InjectView;
 
@@ -20,11 +22,14 @@ import butterknife.InjectView;
  */
 public class ImageTextPagerFragment extends BaseFragment {
 
+    private List<ImageText> imageTexts;
+    private int position;
 
-    public static ImageTextPagerFragment newInstance(ArrayList<ImageText> imageTexts) {
+    public static ImageTextPagerFragment newInstance(ArrayList<ImageText> imageTexts, int position) {
         ImageTextPagerFragment fragment = new ImageTextPagerFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(Constant.INTENT_KEY.IMAGE_TEXT_LIST, imageTexts);
+        args.putInt(Constant.INTENT_KEY.POSITION, position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,6 +39,8 @@ public class ImageTextPagerFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        position = getArguments().getInt(Constant.INTENT_KEY.POSITION);
+        imageTexts = getArguments().getParcelableArrayList(Constant.INTENT_KEY.IMAGE_TEXT_LIST);
     }
 
     @Override
@@ -45,6 +52,7 @@ public class ImageTextPagerFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        getActivity().getApplication().getTheme().
-
+        pager.setAdapter(new ImageTextPagerAdapter(getActivity().getSupportFragmentManager(), imageTexts));
+        pager.setCurrentItem(position);
     }
 }
