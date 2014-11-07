@@ -86,8 +86,8 @@ public class Version implements Comparator<Version>, Parcelable {
 //            e.printStackTrace();
 //            version.versionCode = 2;
 //        }
-        version.versionCode = 2;
-        version.versionName = "v1.0.1";
+        version.versionCode = 4;
+        version.versionName = "v1.1.0";
     }
 
     public static Version getLastestVersion() {

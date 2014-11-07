@@ -25,7 +25,7 @@ public class BlankActivity extends BaseActivity implements AppTimelineFragment.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.blank, menu);
+        getMenuInflater().inflate(R.menu.download, menu);
         return true;
     }
 

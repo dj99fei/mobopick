@@ -1,14 +1,26 @@
 package com.cyou.mobopick.domain;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cyou.mobopick.MyApplication;
 import com.cyou.mobopick.R;
+import com.cyou.mobopick.providers.DownloadManager;
+import com.cyou.mobopick.providers.downloads.Downloads;
 import com.cyou.mobopick.util.AppTheme;
 import com.cyou.mobopick.util.CalenderUtils;
 import com.cyou.mobopick.util.Constant;
+import com.cyou.mobopick.util.LogUtils;
+import com.cyou.mobopick.util.Utils;
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
@@ -26,6 +38,7 @@ import java.util.List;
  */
 public class AppModel implements Parcelable {
 
+    private static final String TAG = AppModel.class.getSimpleName();
     public String appSize;
     public String authorAvatarUrl;
     public String authorCareer;
@@ -47,7 +60,6 @@ public class AppModel implements Parcelable {
     public int id;
     public boolean isFavored;
     public int minSdkVer;
-    public String packageName;
     public int showTimes;
     public String subTitle;
     @SerializedName(value = "title")
@@ -86,6 +98,11 @@ public class AppModel implements Parcelable {
     public int fearful;
 
     public int themeColor;
+
+    @SerializedName(value = "package_name")
+    public String packageName;
+    @SerializedName(value = "package_md5")
+    public String packageMd5;
 
 
     public AppModel() {
@@ -331,4 +348,111 @@ public class AppModel implements Parcelable {
             return new AppModel[size];
         }
     };
+
+    private Uri localUri;
+    private String mimeType;
+    private int status;
+    private boolean queryed;
+
+    public void query() {
+        DownloadManager downloadManager = new DownloadManager(MyApplication.getInstance().getContentResolver(), MyApplication.getInstance().getPackageName());
+        downloadManager.setAccessAllDownloads(true);
+        DownloadManager.Query baseQuery = new DownloadManager.Query().setOnlyIncludeVisibleInDownloadsUi(true);
+        Cursor cursor = downloadManager.query(baseQuery);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                if (downloadUrl.equals(cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI)))) {
+                    status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
+                    LogUtils.d(TAG, "status = %s", status);
+                    String localUriStr = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                    if (!TextUtils.isEmpty(localUriStr)) {
+                        localUri = Uri.parse(localUriStr);
+                    }
+                    mimeType = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_MEDIA_TYPE));
+                    break;
+                }
+            }
+            cursor.close();
+        }
+        queryed = true;
+    }
+
+
+
+    public boolean isDownloaded() {
+        if (status != DownloadManager.STATUS_SUCCESSFUL && status != Downloads.STATUS_SUCCESS) {
+            return false;
+        }
+        try {
+            MyApplication.getInstance().getContentResolver().openFileDescriptor(localUri, "r").close();
+        } catch (Exception exc) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isInstalled() {
+        if (TextUtils.isEmpty(DeviceInfo.apps) || TextUtils.isEmpty(packageName))
+            return false;
+        return DeviceInfo.apps.contains(packageName);
+    }
+
+
+
+    public void setActionImage(ImageView imageView) {
+        setActionImage(imageView, false);
+    }
+
+
+    public void setActionImage(ImageView imageView, boolean forceRefresh) {
+        if (!queryed || forceRefresh) {
+            query();
+        }
+        if (isInstalled()) {
+            imageView.setImageResource(R.drawable.ic_open);
+        } else if (isDownloaded()) {
+            imageView.setImageResource(R.drawable.ic_install);
+        } else {
+            imageView.setImageResource(R.drawable.ic_download);
+        }
+    }
+
+    public void handleAction(DownloadManager downloadManager) {
+        handleAction(downloadManager, false);
+    }
+    public void handleAction(DownloadManager downloadManager, boolean forceRefresh) {
+        Context context = MyApplication.getInstance();
+        if (!queryed || forceRefresh) {
+            query();
+        }
+        if (isInstalled()) {
+            Utils.startAPP(packageName);
+        } else if (isDownloaded()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(localUri, mimeType);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            try {
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException ex) {
+                Toast.makeText(context, R.string.download_no_application_title,
+                        Toast.LENGTH_LONG).show();
+            }
+        }else {
+            startDownload(downloadManager);
+        }
+
+    }
+
+    private void startDownload(DownloadManager downloadManager) {
+        LogUtils.d(TAG, "start downloadurl:\n%s", downloadUrl);
+        String url = downloadUrl;
+        Uri srcUri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(srcUri);
+        request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS, "/");
+        request.setPackageName(packageName);
+        request.setDescription(getIconUrl());
+        downloadManager.enqueue(request);
+    }
 }

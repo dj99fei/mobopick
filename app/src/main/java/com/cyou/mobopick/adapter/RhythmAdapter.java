@@ -28,7 +28,6 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import org.lucasr.twowayview.widget.ListLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class RhythmAdapter extends RecyclerView.Adapter<RhythmAdapter.ListItemVi
     private Resources resource;
     public static final int ITEM_CACHED_SIZE = 10;
     private int currentPosition;
-    private ListLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private float selectRatio =  0.35f;
     private float unselectRatio = 0.7f;

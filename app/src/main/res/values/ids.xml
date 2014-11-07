@@ -47,4 +47,26 @@
     <item type="id" name="text_emoji_comment"/>
     <item type="id" name="text_emoji_comment_num"/>
     <item type="id" name="item_image"/>
+    <item type="id" name="item_action_image"/>
+    <item type="id" name="item_action"/>
+    <item type="id" name="item_action_text"/>
+    <item type="id" name="item_download_title"/>
+    <item type="id" name="item_download_progress"/>
+    <item type="id" name="item_download_size"/>
+    <item type="id" name="item_download_speed"/>
+    <item type="id" name="item_download_percent"/>
+    <item type="id" name="list"/>
+    <item type="id" name="item_download_check"/>
+    <item type="id" name="item_download_check_layout"/>
+    <item type="id" name="action_delete"/>
+    <item type="id" name="action_delete_layout"/>
+    <item type="id" name="action_downloads"/>
+    <item type="id" name="action_selectAll"/>
+    <item type="id" name="tag_id"/>
+    <item type="id" name="tag_status"/>
+    <item type="id" name="tag_mime"/>
+    <item type="id" name="tag_installed"/>
+    <item type="id" name="tag_package_name"/>
+    <item type="id" name="tag_local"/>
+
 </resources>

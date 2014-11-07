@@ -55,4 +55,5 @@ public class ImageTextPagerFragment extends BaseFragment {
         pager.setAdapter(new ImageTextPagerAdapter(getActivity().getSupportFragmentManager(), imageTexts));
         pager.setCurrentItem(position);
     }
+
 }

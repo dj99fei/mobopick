@@ -1,8 +1,6 @@
 package com.cyou.mobopick.fragment;
 
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +13,11 @@ import android.widget.TextView;
 
 import com.cyou.mobopick.R;
 import com.cyou.mobopick.app.AppDetailActivity;
+import com.cyou.mobopick.bus.AppInstallEvent;
+import com.cyou.mobopick.bus.DownloadEvent;
 import com.cyou.mobopick.domain.AppModel;
+import com.cyou.mobopick.providers.DownloadManager;
+import com.cyou.mobopick.providers.downloads.DownloadService;
 import com.cyou.mobopick.util.Constant;
 import com.cyou.mobopick.util.LogUtils;
 import com.cyou.mobopick.view.HtmlTextView;
@@ -23,6 +25,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by chengfei on 14-10-6.
@@ -42,6 +45,9 @@ public class CardFragment extends BaseFragment {
     protected ImageView mCoverImageView;
     @InjectView(R.id.text_digest)
     protected HtmlTextView mDigestText;
+    private EventBus eventBus;
+
+    DownloadManager downloadManager;
     private Callback callback = new Callback() {
         @Override
         public void onSuccess() {
@@ -98,6 +104,17 @@ public class CardFragment extends BaseFragment {
         if (getArguments() != null) {
             appModel = getArguments().getParcelable(Constant.INTENT_KEY.APPMODEL);
         }
+        downloadManager = new DownloadManager(getActivity().getContentResolver(),
+                getActivity().getPackageName());
+        startDownloadService();
+        eventBus = EventBus.getDefault();
+
+    }
+
+    private void startDownloadService() {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), DownloadService.class);
+        getActivity().startService(intent);
     }
 
     @Override
@@ -108,6 +125,7 @@ public class CardFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        eventBus.register(this);
         this.mTitleText.setText(this.appModel.title);
         this.mTagText.setText(this.appModel.tags);
         this.mBravoNumText.setText("  " + this.appModel.upNum);
@@ -120,18 +138,22 @@ public class CardFragment extends BaseFragment {
             LogUtils.d(TAG, "height has got %s", height);
             this.mDigestText.setText(appModel.content);
         }
-        ((GradientDrawable)mDownloadImageView.getBackground()).setColor(appModel.getThemeColor());
+//        ((GradientDrawable)mDownloadImageView.getBackground()).setColor(appModel.getThemeColor());
         rootView.setOnClickListener(this);
         Picasso.with(getActivity()).load(appModel.getCoverImageUrl()).into(mCoverImageView, callback);
+        appModel.setActionImage(mDownloadImageView);
+
     }
+
+
 
     @Override
     public void onClick(View v) {
+
         if (v.getId() == R.id.download) {
-            Uri uri = Uri.parse(appModel.downloadUrl);
-            Intent downloadIntent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(downloadIntent);
+            appModel.handleAction(downloadManager);
         }
+
         if (v.getId() == R.id.root) {
             Intent intent = new Intent(getActivity(), AppDetailActivity.class);
             intent.putExtra(Constant.INTENT_KEY.APPMODEL, appModel);
@@ -142,6 +164,27 @@ public class CardFragment extends BaseFragment {
     private void resizeImageView() {
         ViewGroup.LayoutParams lp = mCoverImageView.getLayoutParams();
         lp.height = height;
+    }
+
+    public void onEventMainThread(DownloadEvent event) {
+        LogUtils.d(TAG, "received event url , appmodel downloadurl :%s\n%s", event.getUrl(), appModel.downloadUrl);
+        if (event.getUrl().equals(appModel.downloadUrl)) {
+            appModel.setActionImage(mDownloadImageView, true);
+        }
+    }
+
+    public void onEventMainThread(AppInstallEvent event) {
+        LogUtils.d(TAG, "%s", event.getPackageName());
+        LogUtils.d(TAG, "%s", appModel.packageName);
+        if (event.getPackageName().contains(appModel.packageName)) {
+            appModel.setActionImage(mDownloadImageView, true);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        eventBus.unregister(this);
     }
 }
 

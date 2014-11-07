@@ -9,6 +9,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_select_all">Select all</string>
+    <string name="action_cancel">Cancel</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_blank">BlankActivity</string>
     <string name="hello_world">Hello world!</string>
@@ -31,5 +34,12 @@
     <string name="emoji_surprised">Surprised</string>
     <string name="emoji_rejected">Rejected</string>
     <string name="emoji_fearful">Fearful</string>
+    <string name="download">Download</string>
+    <string name="install">Install</string>
+    <string name="downloading">Downloading</string>
+    <string name="open">Open</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="error">Error</string>
     <string name="views_total"><xliff:g>%1$s</xliff:g> views</string>
 </resources>

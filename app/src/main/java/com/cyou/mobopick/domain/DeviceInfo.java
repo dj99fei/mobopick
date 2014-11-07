@@ -129,4 +129,13 @@ public class DeviceInfo {
         return packagesBuilder.toString();
     }
 
+
+    public static void addPackage(String packageName) {
+        apps = new StringBuilder(apps).append(",").append(packageName).toString();
+    }
+
+    public static void refreshApps() {
+        apps = getInstalledApps();
+    }
+
 }

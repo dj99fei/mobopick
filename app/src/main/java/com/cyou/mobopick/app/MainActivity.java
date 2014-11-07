@@ -1,9 +1,11 @@
 package com.cyou.mobopick.app;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cyou.mobopick.R;
@@ -95,6 +97,12 @@ public class MainActivity extends CommonActivity implements NavigationDrawerFrag
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.downloads, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -102,7 +110,8 @@ public class MainActivity extends CommonActivity implements NavigationDrawerFrag
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_downloads) {
+            startActivity(new Intent(this, DownloadListActivity.class));
             return true;
         }
 

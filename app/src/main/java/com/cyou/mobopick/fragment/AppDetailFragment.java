@@ -1,12 +1,11 @@
 package com.cyou.mobopick.fragment;
 
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -18,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.cyou.mobopick.R;
 import com.cyou.mobopick.adapter.EmojiCommentAdapter;
@@ -27,14 +28,12 @@ import com.cyou.mobopick.domain.AppModel;
 import com.cyou.mobopick.net.AppDetailRequest;
 import com.cyou.mobopick.net.EmojiCommentRequest;
 import com.cyou.mobopick.net.NetworkRequestListener;
+import com.cyou.mobopick.providers.DownloadManager;
 import com.cyou.mobopick.util.Constant;
 import com.cyou.mobopick.volley.MyVolley;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.squareup.picasso.Picasso;
-
-import org.lucasr.twowayview.TwoWayLayoutManager;
-import org.lucasr.twowayview.widget.ListLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +68,7 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
 
     private List<AppModel.EmojiComment> emojiComments = new ArrayList<AppModel.EmojiComment>();
     private EmojiCommentAdapter emojiCommentAdapter;
+    private DownloadManager downloadManager;
 
     public static AppDetailFragment newInstance(AppModel appModel) {
         AppDetailFragment fragment = new AppDetailFragment();
@@ -82,6 +82,7 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         appModel = getArguments().getParcelable(Constant.INTENT_KEY.APPMODEL);
+        downloadManager = new DownloadManager(getActivity().getContentResolver(), getActivity().getPackageName());
     }
 
 
@@ -106,12 +107,13 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
                 new GestureDetectorCompat(getActivity(), new RecyclerViewDemoOnGestureListener(emojiCommentRecyclerView));
         iamgeSetGustreDetctor = new GestureDetectorCompat(getActivity(), new RecyclerViewDemoOnGestureListener(imageSetRecyclerView));
         downloadImage.setOnClickListener(this);
-        ((GradientDrawable)downloadImage.getBackground()).setColor(appModel.getThemeColor());
+//        ((GradientDrawable)downloadImage.getBackground()).setColor(appModel.getThemeColor());
+        appModel.setActionImage(downloadImage);
     }
 
     private void initRecyclerView(RecyclerView recyclerView) {
 //        recyclerView.setItemViewCacheSize(10);
-        ListLayoutManager layoutManager = new ListLayoutManager(getActivity(), TwoWayLayoutManager.Orientation.HORIZONTAL);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(false);
         recyclerView.setHorizontalFadingEdgeEnabled(false);
@@ -174,7 +176,7 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
-            final int clickedChild = recyclerView.indexOfChild(view) + ((ListLayoutManager) recyclerView.getLayoutManager()).getFirstVisiblePosition();
+            final int clickedChild = recyclerView.indexOfChild(view) + ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
 //            return true;
             if (recyclerView.getId() == R.id.recyclerview_emoji_comment) {
                 AppModel.EmojiComment comment = emojiComments.get(clickedChild);
@@ -197,7 +199,6 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
                 set.playSequentially(set1, set2);
                 set.start();
                 return true;
-
             }
 
             if (recyclerView.getId() == R.id.recyclerview_image_set) {
@@ -230,11 +231,19 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
 
     @Override
     public void onClick(View v) {
-
         if (v.getId() == R.id.download) {
-            Uri uri = Uri.parse(appModel.downloadUrl);
-            Intent downloadIntent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(downloadIntent);
+            appModel.handleAction(downloadManager);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        MyVolley.getRequestQueue().cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return request instanceof AppDetailRequest;
+            }
+        });
     }
 }

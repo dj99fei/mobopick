@@ -18,10 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10.0dp"
         android:gravity="center_vertical"
         android:lineSpacingMultiplier="1.15"
         android:minWidth="@dimen/actionbar_time_second_min_width"
+        android:text=""
         android:textColor="@color/white_60_alpha"
         android:textSize="12.0sp"/>
     <TextView
@@ -33,12 +33,14 @@
         android:layout_toLeftOf="@id/text_time_second"
         android:gravity="center_vertical"
         android:textColor="@color/white"
+        android:text=""
         android:textSize="@dimen/num_date"/>
     <TextView
         android:layout_width="1dp"
         android:layout_height="22dp"
         android:id="@id/actionbar_divider"
         android:layout_centerVertical="true"
+        android:text=""
         android:layout_toStartOf="@id/text_time_first"
         android:layout_marginRight="6dp"
         android:layout_toLeftOf="@id/text_time_first"
@@ -49,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/actionbar_divider"
         android:layout_centerVertical="true"
+        android:text=""
         android:layout_marginRight="6dp"
         android:background="@color/transparent"
         android:src="@drawable/btn_rocket_to_first"

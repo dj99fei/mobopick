@@ -21,6 +21,8 @@
 
 
     <dimen name="layout_inner_padding_horizontal">15dp</dimen>
+    <dimen name="layout_inner_padding_horizontal_small">8dp</dimen>
+    <dimen name="layout_inner_padding_vertical_small">6dp</dimen>
     <dimen name="layout_inner_padding_vertical">10dp</dimen>
 
     <dimen name="layout_padding_horizontal">18dp</dimen>
@@ -30,4 +32,5 @@
     <dimen name="emoji_content_min_width">80dp</dimen>
     <dimen name="emoji_content_min_height">110dp</dimen>
     <dimen name="image_text_text_min_height">60dp</dimen>
+    <dimen name="item_download_action_width">100dp</dimen>
 </resources>

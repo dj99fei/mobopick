@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cyou.mobopick.providers.downloads.ui.DownloadItem xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/layout_inner_padding_horizontal_small"
+                android:paddingBottom="@dimen/layout_inner_padding_horizontal_small"
+                android:paddingRight="@dimen/layout_inner_padding_horizontal_small"
+                android:paddingTop="@dimen/layout_inner_padding_horizontal_small">
+
+    <ImageView
+        android:id="@id/item_image"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher"/>
+
+    <LinearLayout
+        android:id="@id/item_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@id/item_action_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_download"
+            />
+
+        <TextView
+            android:id="@id/item_action_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp"
+            android:text="@string/download"
+            android:textAppearance="@style/TextAppearance.Small"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@id/item_download_check_layout"
+        android:visibility="gone"
+        android:gravity="center"
+        >
+
+        <CheckBox
+            android:id="@id/item_download_check"
+            android:layout_width="wrap_content"
+            android:text=""
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+        android:layout_marginRight="@dimen/layout_inner_padding_horizontal_small"
+        android:layout_toLeftOf="@id/item_action"
+        android:layout_toRightOf="@id/item_image"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@id/item_download_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Medium"/>
+
+            <TextView
+                android:id="@id/item_download_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/item_download_title"
+                android:textAppearance="@style/TextAppearance.Small"
+                />
+
+            <ProgressBar
+                android:id="@id/item_download_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_download_percent"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                android:minHeight="7dp"
+                android:progressDrawable="@drawable/progress_bar_states"
+                />
+
+            <TextView
+                android:id="@id/item_download_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_download_progress"
+                android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                android:textAppearance="@style/TextAppearance.Small"/>
+
+            <TextView
+                android:id="@id/item_download_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text=""
+                android:layout_below="@id/item_download_progress"
+                android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+                android:textAppearance="@style/TextAppearance.Small"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</com.cyou.mobopick.providers.downloads.ui.DownloadItem>

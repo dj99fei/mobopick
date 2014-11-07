@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.cyou.mobopick.app.BlankActivity" >
+    <item android:id="@id/action_selectAll"
+        android:title="@string/action_cancel"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+
+</menu>
