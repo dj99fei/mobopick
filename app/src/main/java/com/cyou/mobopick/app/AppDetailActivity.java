@@ -12,7 +12,7 @@ import com.cyou.mobopick.util.Constant;
 public class AppDetailActivity extends CommonActivity {
 
     @Override
-    Fragment getFragment() {
+    public Fragment getFragment() {
         AppModel appModel = getIntent().getParcelableExtra(Constant.INTENT_KEY.APPMODEL);
         return  AppDetailFragment.newInstance(appModel);
     }

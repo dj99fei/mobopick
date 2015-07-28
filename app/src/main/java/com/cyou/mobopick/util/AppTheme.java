@@ -2,6 +2,10 @@ package com.cyou.mobopick.util;
 
 import android.graphics.Color;
 
+import com.cyou.mobopick.bus.ThemeColorChangeEvent;
+
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by chengfei on 14/10/29.
  */
@@ -26,6 +30,7 @@ public class AppTheme {
 
     public static void setCurBgColorStr(int index) {
         AppTheme.curBgColorStr = getBgColorString(index);
+        EventBus.getDefault().post(new ThemeColorChangeEvent());
     }
 
     public static int getCurBgColor() {

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.cyou.mobopick.R;
 import com.cyou.mobopick.adapter.CardAppPagerAdapter;
 import com.cyou.mobopick.adapter.RhythmAdapter;
+import com.cyou.mobopick.bus.UpdateActionBarEvent;
 import com.cyou.mobopick.domain.AppModel;
 import com.cyou.mobopick.domain.AppModelListResult;
 import com.cyou.mobopick.domain.DeviceInfo;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,16 +103,17 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         LogUtils.d(TAG, "bar = %s", bar);
+        setHasOptionsMenu(true);
+        EventBus.getDefault().register(this);
+    }
+
+    public void onEventMainThread(UpdateActionBarEvent event) {
+        setActionBar(currentPosition);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        dayText = (TextView) bar.getCustomView().findViewById(R.id.text_time_first);
-        monthWeekText = (TextView) bar.getCustomView().findViewById(R.id.text_time_second);
-        toHeadButton = (ImageButton) bar.getCustomView().findViewById(R.id.btn_rocket_to_head);
-        actionbarDivider = bar.getCustomView().findViewById(R.id.actionbar_divider);
-        toHeadButton.setOnClickListener(this);
     }
 
     @Override
@@ -211,22 +215,42 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
         bar.setBackgroundDrawable(new ColorDrawable(mixedColor));
     }
 
+    private int currentPosition;
 
     @Override
     public void onPageSelected(final int position) {
-
+        currentPosition = position;
         AppTheme.setCurBgColorStr(position);
         adapter.setCurrentPosition(position,layoutManager, recyclerView);
-        AppModel appModel = appModels.get(position);
-        dayText.setText(appModel.getCreateDay());
-        toHeadButton.setVisibility(View.VISIBLE);
-        monthWeekText.setText(appModel.getCreateMonthWeek());
-        if (appModel.isTodayOrYesterday()) {
-            AnimatorUtils.animViewFadeOut(actionbarDivider);
-            AnimatorUtils.animViewFadeOut(toHeadButton);
-        } else {
-            AnimatorUtils.animViewFadeIn(actionbarDivider);
-            AnimatorUtils.animViewFadeIn(toHeadButton);
+        setActionBar(position);
+    }
+
+    private void setActionBar(int position) {
+        if (isVisible()) {
+            ActionBar actionBar = bar;
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+//            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
+            actionBar.setCustomView(R.layout.actionbar_time_line);
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setTitle(R.string.daily_pick);
+            dayText = (TextView) actionBar.getCustomView().findViewById(R.id.text_time_first);
+            monthWeekText = (TextView) actionBar.getCustomView().findViewById(R.id.text_time_second);
+            toHeadButton = (ImageButton) actionBar.getCustomView().findViewById(R.id.btn_rocket_to_head);
+            actionbarDivider = actionBar.getCustomView().findViewById(R.id.actionbar_divider);
+            toHeadButton.setOnClickListener(this);
+            AppModel appModel = appModels.get(position);
+            dayText.setText(appModel.getCreateDay());
+            toHeadButton.setVisibility(View.VISIBLE);
+            monthWeekText.setText(appModel.getCreateMonthWeek());
+            if (appModel.isTodayOrYesterday()) {
+                AnimatorUtils.animViewFadeOut(actionbarDivider);
+                AnimatorUtils.animViewFadeOut(toHeadButton);
+            } else {
+                AnimatorUtils.animViewFadeIn(actionbarDivider);
+                AnimatorUtils.animViewFadeIn(toHeadButton);
+            }
         }
     }
 
@@ -324,5 +348,6 @@ public class AppTimelineFragment extends BaseFragment implements PullToRefreshBa
                 return request instanceof AppTimelineRequest;
             }
         });
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -27,7 +27,7 @@ public class ImageTextActivity extends CommonActivity {
     }
 
     @Override
-    Fragment getFragment() {
+    public Fragment getFragment() {
 
         ArrayList<ImageText> imageTexts = getIntent().getParcelableArrayListExtra(Constant.INTENT_KEY.IMAGE_TEXT_LIST);
         int position = getIntent().getIntExtra(Constant.INTENT_KEY.POSITION, 0);

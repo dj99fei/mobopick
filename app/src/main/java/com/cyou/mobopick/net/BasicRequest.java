@@ -36,7 +36,9 @@ public class BasicRequest extends BaseRequest<Integer> {
         params.put("ip", DeviceInfo.ip);
         params.put("lbs", DeviceInfo.lbs);
         params.put("apps", DeviceInfo.apps);
-        params.put("uuid", String.valueOf(DeviceInfo.uuid));
+        if (DeviceInfo.uuid != -1) {
+            params.put("uuid", String.valueOf(DeviceInfo.uuid));
+        }
         return params;
     }
 }

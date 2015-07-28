@@ -3,24 +3,34 @@ package com.cyou.mobopick.fragment;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cyou.mobopick.R;
+import com.cyou.mobopick.adapter.DrawerAdapter;
+import com.cyou.mobopick.bus.ThemeColorChangeEvent;
+import com.cyou.mobopick.bus.UpdateActionBarEvent;
+import com.cyou.mobopick.util.AppTheme;
+import com.cyou.mobopick.view.DrawerItem;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -77,6 +87,8 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -89,23 +101,21 @@ public class NavigationDrawerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (bar == null) {
+            bar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        }
+        TextView header = new TextView(getActivity());
+        header.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 1));
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView.addHeaderView(header);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                bar.getThemedContext(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
+        mDrawerListView.setAdapter(new DrawerAdapter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -149,6 +159,7 @@ public class NavigationDrawerFragment extends BaseFragment {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+//                drawerView.setBackgroundColor();
                 if (!isAdded()) {
                     return;
                 }
@@ -184,6 +195,9 @@ public class NavigationDrawerFragment extends BaseFragment {
     }
 
     private void selectItem(int position) {
+        if (mDrawerListView == null) {
+            return;
+        }
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
@@ -191,8 +205,9 @@ public class NavigationDrawerFragment extends BaseFragment {
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
+        DrawerItem item = (DrawerItem) mDrawerListView.getAdapter().getItem(position);
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+            mCallbacks.onNavigationDrawerItemSelected(item.id);
         }
     }
 
@@ -263,10 +278,8 @@ public class NavigationDrawerFragment extends BaseFragment {
      */
     private void showGlobalContextActionBar() {
         ActionBar actionBar = bar;
-        actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_HOME_AS_UP);
-        actionBar.setCustomView(R.layout.actionbar_time_line);
         actionBar.setTitle(R.string.app_name);
     }
 
@@ -281,10 +294,20 @@ public class NavigationDrawerFragment extends BaseFragment {
     }
 
     private void showCurrentActionBar() {
-        ActionBar actionBar = bar;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_HOME);
-        actionBar.setCustomView(R.layout.actionbar_time_line);
+
+
+        EventBus.getDefault().post(new UpdateActionBarEvent());
+    }
+
+    public void onEventMainThread(ThemeColorChangeEvent event) {
+        if (getView() != null) {
+            getView().setBackgroundDrawable(new ColorDrawable(AppTheme.getCurBgColor()));
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

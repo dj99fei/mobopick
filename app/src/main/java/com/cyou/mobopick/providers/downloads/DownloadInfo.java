@@ -28,7 +28,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
 
-import com.cyou.mobopick.bus.DownloadEvent;
+import com.cyou.mobopick.bus.DownloadFinishedEvent;
 import com.cyou.mobopick.providers.DownloadManager;
 
 import java.text.DecimalFormat;
@@ -284,7 +284,7 @@ public class DownloadInfo {
             intent.setData(getMyDownloadsUri());
 
         }
-        EventBus.getDefault().post(new DownloadEvent(mUri));
+        EventBus.getDefault().post(new DownloadFinishedEvent(mUri));
         mSystemFacade.sendBroadcast(intent);
     }
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/layout_padding_vertical"
+    android:paddingBottom="@dimen/layout_padding_vertical"
+    android:paddingLeft="@dimen/layout_inner_padding_horizontal"
+    android:paddingRight="@dimen/layout_inner_padding_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_new_group"
+        android:textAppearance="@style/TextAppearance.Large.White"
+        android:gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/group_name"
+        android:id="@id/group_name"
+        android:maxLength="15"
+        android:background="@drawable/bg_edit"
+        android:layout_marginTop="@dimen/layout_padding_vertical"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/group_name_restraint"
+        android:textStyle="bold"
+        android:textColor="@color/group_transparent_text"
+        android:textAppearance="@style/TextAppearance.Small.White"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edit"
+        android:hint="@string/group_description"
+        android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+        android:maxLength="30"
+        android:id="@id/group_des"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Small.White"
+        android:textColor="@color/group_transparent_text"
+        android:textStyle="bold"
+        android:text="@string/group_des_restraint"/>
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/layout_padding_vertical"
+        android:id="@id/done"
+        android:text="@string/done"
+        android:background="@drawable/bg_btn_done"/>
+</LinearLayout>

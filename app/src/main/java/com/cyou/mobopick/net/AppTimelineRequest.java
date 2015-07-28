@@ -42,9 +42,9 @@ public class AppTimelineRequest extends BaseRequest<AppModelListResult> {
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("pagecurrent", String.valueOf(pageCurrent));
-        params.put("pagesize", String.valueOf(AppModelListResult.PAGE_SIZE));
-        params.put("uuid", String.valueOf(DeviceInfo.uuid));
+        params.put(Params.PAGE_CURRENT, String.valueOf(pageCurrent));
+        params.put(Params.PAGESIZE, String.valueOf(AppModelListResult.PAGE_SIZE));
+        params.put(Params.UUID, String.valueOf(DeviceInfo.uuid));
         return params;
     }
 

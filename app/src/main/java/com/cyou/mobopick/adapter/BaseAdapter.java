@@ -13,8 +13,8 @@ import butterknife.ButterKnife;
  */
 public abstract  class BaseAdapter<T> extends android.widget.BaseAdapter {
 
-    private List<T> data;
-    private Context context;
+    protected List<T> data;
+    protected Context context;
 
     public BaseAdapter(Context context) {
         this.context = context;
@@ -40,28 +40,35 @@ public abstract  class BaseAdapter<T> extends android.widget.BaseAdapter {
         return getCount() == 0 ? null : data.get(position);
     }
 
+    public void setData(List<T> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         BaseViewHolder holder = null;
         if (convertView == null) {
-            holder = getViewHolder();
             convertView = inflate();
+            holder = getViewHolder(convertView);
             convertView.setTag(holder);
         }
         holder = (BaseViewHolder) convertView.getTag();
-        setViews(holder,position);
+        bindViews(holder, position);
         return convertView;
     }
 
     protected abstract View inflate();
 
-    protected abstract BaseViewHolder getViewHolder();
+    protected abstract BaseViewHolder getViewHolder(View itemView);
 
-    public abstract void setViews(BaseViewHolder holder, int position);
+    public abstract void bindViews(BaseViewHolder holder, int position);
 
     public static class BaseViewHolder {
+        public View itemView;
         public BaseViewHolder(View view) {
             ButterKnife.inject(this, view);
+            this.itemView = view;
         }
     }
 

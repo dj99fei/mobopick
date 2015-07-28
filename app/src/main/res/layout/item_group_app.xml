@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="2.0dip">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/layout_inner_padding_vertical_small"
+        android:paddingLeft="@dimen/layout_inner_padding_vertical"
+        android:paddingRight="@dimen/layout_inner_padding_vertical"
+        android:paddingTop="@dimen/layout_inner_padding_vertical_small">
+
+        <ImageView
+            android:id="@id/group_app_image"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@id/group_app_action"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@id/group_app_action_image"
+                android:src="@drawable/ic_start"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/open"
+                android:id="@id/group_app_action_text"/>
+            </LinearLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/group_app_action"
+            android:layout_alignRight="@id/group_app_action"
+            android:id="@id/progress_bar"
+            android:visibility="invisible"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_alignBottom="@id/group_app_action"
+            android:layout_alignTop="@id/group_app_action"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/group_app_action"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
+            android:layout_toRightOf="@id/group_app_image">
+
+            <TextView
+                android:id="@id/group_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IT Mam"
+                android:textAppearance="@style/TextAppearance.Large"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/installed"
+                android:layout_below="@id/group_app_name"
+                android:id="@id/group_app_installed"/>
+            <TextView
+                android:id="@id/group_app_installed_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_app_name"
+                android:layout_toRightOf="@id/group_app_installed"
+                android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+                android:text="70/90"
+                android:textAppearance="@style/TextAppearance.Medium"/>
+
+            <TextView
+                android:id="@id/group_app_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_app_installed_rate"
+                android:layout_marginTop="@dimen/layout_inner_padding_vertical_small"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="We just different with others"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

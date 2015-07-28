@@ -2,7 +2,9 @@
 <resources>
     <string name="key_first_open">first_open</string>
     <string name="module_default">@string/app_name</string>
+    <string name="module_group">group</string>
     <string name="key_poped_version_code">key_poped_version_code</string>
     <string name="key_uuid">key_uuid</string>
+    <string name="key_my_group_id">my_group_id</string>
 
 </resources>

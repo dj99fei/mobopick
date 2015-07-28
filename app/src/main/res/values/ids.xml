@@ -21,7 +21,6 @@
     <item type="id" name="image_icon"/>
     <item type="id" name="pager_backgroud"/>
     <item type="id" name="download"/>
-    <item type="id" name="actionbar_title"/>
     <item type="id" name="start_btn"/>
     <item type="id" name="text"/>
     <item type="id" name="indicator1"/>
@@ -31,6 +30,7 @@
     <item type="id" name="actionbar_divider"/>
     <item type="id" name="icon"/>
     <item type="id" name="text_app_name"/>
+    <item type="id" name="divider"/>
     <item type="id" name="divider_1"/>
     <item type="id" name="divider_2"/>
     <item type="id" name="divider_3"/>
@@ -62,11 +62,44 @@
     <item type="id" name="action_delete_layout"/>
     <item type="id" name="action_downloads"/>
     <item type="id" name="action_selectAll"/>
+    <item type="id" name="action_more"/>
     <item type="id" name="tag_id"/>
+    <item type="id" name="tag_app"/>
     <item type="id" name="tag_status"/>
     <item type="id" name="tag_mime"/>
     <item type="id" name="tag_installed"/>
     <item type="id" name="tag_package_name"/>
     <item type="id" name="tag_local"/>
 
+    <item type="id" name="item_drawer_dailypick"/>
+    <item type="id" name="item_drawer_group"/>
+    <item type="id" name="item_drawer_downloads"/>
+    <item type="id" name="avatar"/>
+    <item type="id" name="action_add_group"/>
+    <item type="id" name="group_image"/>
+    <item type="id" name="group_image_bg"/>
+    <item type="id" name="group_name"/>
+    <item type="id" name="group_member_num"/>
+    <item type="id" name="group_des"/>
+    <item type="id" name="group_app_num"/>
+    <item type="id" name="group_app_member_num"/>
+    <item type="id" name="group_my_app_in_group_num"/>
+    <item type="id" name="done"/>
+    <item type="id" name="group_ic_app_num"/>
+    <item type="id" name="group_ic_my_app_num"/>
+    <item type="id" name="exclusive"/>
+    <item type="id" name="all"/>
+    <item type="id" name="group_detail_des"/>
+    <item type="id" name="group_app_image"/>
+    <item type="id" name="group_app_header_title"/>
+    <item type="id" name="group_app_name"/>
+    <item type="id" name="group_app_installed"/>
+    <item type="id" name="group_app_installed_rate"/>
+    <item type="id" name="group_app_action_image"/>
+    <item type="id" name="group_app_action"/>
+    <item type="id" name="group_app_des"/>
+    <item type="id" name="group_app_action_text"/>
+    <item type="id" name="radio_group"/>
+    <item type="id" name="group_join"/>
+    <item type="id" name="progress_bar"/>
 </resources>

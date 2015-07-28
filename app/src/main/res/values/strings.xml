@@ -12,6 +12,8 @@
     <string name="action_delete">Delete</string>
     <string name="action_select_all">Select all</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_more">More</string>
+    <string name="action_add_group">New group</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_blank">BlankActivity</string>
     <string name="hello_world">Hello world!</string>
@@ -28,7 +30,6 @@
     <string name="yesterday">Yesterday</string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="click_to_view">Click to view</string>
-    
     <string name="emoji_accepted">Accepted</string>
     <string name="emoji_joy">Joy</string>
     <string name="emoji_surprised">Surprised</string>
@@ -36,10 +37,35 @@
     <string name="emoji_fearful">Fearful</string>
     <string name="download">Download</string>
     <string name="install">Install</string>
+    <string name="installed">Installed</string>
     <string name="downloading">Downloading</string>
     <string name="open">Open</string>
     <string name="pause">Pause</string>
     <string name="resume">Resume</string>
     <string name="error">Error</string>
     <string name="views_total"><xliff:g>%1$s</xliff:g> views</string>
+    <string name="member_count">(<xliff:g>%1$s</xliff:g>)</string>
+    <string name="title_activity_test">Test</string>
+
+    <string name="daily_pick">Daily Pick</string>
+    <string name="my_group">My Group</string>
+    <string name="downloads">Downloads</string>
+    <string name="add_group_des">App you want just in group</string>
+    <string name="no_group_des">I had installed <Data><![CDATA[ <b><font color="#6FC275">%1$s</font></b> ]]></Data> Apps</string>
+    <string name="no_group_des_plus">But I am lonely</string>
+    <string name="select_group">Select your Group</string>
+    <string name="exclusive">Exclusive</string>
+    <string name="joined">Joined</string>
+
+    <string name="create_new_group">Create new Group</string>
+    <string name="group_name">Group name</string>
+    <string name="group">Group</string>
+    <string name="group_description">Group description</string>
+    <string name="group_name_restraint">Less than 15 words</string>
+    <string name="group_des_restraint">Less than 30 words</string>
+    <string name="done">Done</string>
+    <string name="group_detail_des">App contribution with all members</string>
+    <string name="all">All</string>
+    <string name="verify_not_empty"><xliff:g>%1$s</xliff:g> can not be empty.</string>
+    <string name="verify_length">The length of the <xliff:g>%1$s</xliff:g> only can between <xliff:g>%2$s</xliff:g> and <xliff:g>%3$s.</xliff:g></string>
 </resources>

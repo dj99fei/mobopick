@@ -8,13 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cyou.mobopick.R;
 import com.cyou.mobopick.app.AppDetailActivity;
 import com.cyou.mobopick.bus.AppInstallEvent;
-import com.cyou.mobopick.bus.DownloadEvent;
+import com.cyou.mobopick.bus.DownloadFinishedEvent;
+import com.cyou.mobopick.bus.DownloadStartEvent;
 import com.cyou.mobopick.domain.AppModel;
 import com.cyou.mobopick.providers.DownloadManager;
 import com.cyou.mobopick.providers.downloads.DownloadService;
@@ -45,6 +47,8 @@ public class CardFragment extends BaseFragment {
     protected ImageView mCoverImageView;
     @InjectView(R.id.text_digest)
     protected HtmlTextView mDigestText;
+    @InjectView(R.id.progress_bar)
+    protected ProgressBar progressBar;
     private EventBus eventBus;
 
     DownloadManager downloadManager;
@@ -166,10 +170,12 @@ public class CardFragment extends BaseFragment {
         lp.height = height;
     }
 
-    public void onEventMainThread(DownloadEvent event) {
+    public void onEventMainThread(DownloadFinishedEvent event) {
         LogUtils.d(TAG, "received event url , appmodel downloadurl :%s\n%s", event.getUrl(), appModel.downloadUrl);
         if (event.getUrl().equals(appModel.downloadUrl)) {
             appModel.setActionImage(mDownloadImageView, true);
+            progressBar.setVisibility(View.INVISIBLE);
+            mDownloadImageView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -178,6 +184,16 @@ public class CardFragment extends BaseFragment {
         LogUtils.d(TAG, "%s", appModel.packageName);
         if (event.getPackageName().contains(appModel.packageName)) {
             appModel.setActionImage(mDownloadImageView, true);
+        }
+    }
+
+    public void onEventMainThread(DownloadStartEvent event) {
+        LogUtils.d(TAG, "received event url , appmodel downloadurl :%s\n%s", event.getUrl(), appModel.downloadUrl);
+        if (event.getUrl().equals(appModel.downloadUrl)) {
+//            appModel.setActionImage(mDownloadImageView, true);
+            mDownloadImageView.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+
         }
     }
 

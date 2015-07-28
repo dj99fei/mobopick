@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardElevation="2dp">
+    android:padding="2.0dip">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/layout_inner_padding_vertical_small"
+        android:paddingLeft="@dimen/layout_inner_padding_vertical"
+        android:paddingRight="@dimen/layout_inner_padding_vertical"
+        android:paddingTop="@dimen/layout_inner_padding_vertical_small">
+
+        <ImageView
+            android:id="@id/group_image_bg"
+            android:layout_width="@dimen/size_group_image"
+            android:layout_height="@dimen/size_group_image"
+            android:src="@drawable/ic_android_gray"/>
+        <com.cyou.mobopick.view.ProgressImageView
+            android:id="@id/group_image"
+            android:layout_width="@dimen/size_group_image"
+            android:layout_height="@dimen/size_group_image"
+            android:src="@drawable/ic_android_green"/>
+        <TextView
+            android:layout_width="@dimen/size_group_image"
+            android:layout_height="@dimen/size_group_image"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Large.White"
+            android:text="95"/>
+
+        <TextView
+            android:layout_width="@dimen/size_group_image"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/group_image"
+            android:gravity="center_horizontal"
+            android:text="@string/exclusive"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/arrow"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_arrow"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/layout_inner_padding_horizontal"
+            android:layout_toRightOf="@id/group_image">
+
+            <TextView
+                android:id="@id/group_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IT Mam"
+                android:textAppearance="@style/TextAppearance.Large"/>
+
+            <TextView
+                android:id="@id/group_member_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+                android:layout_toRightOf="@id/group_name"
+                android:text="(9875)"
+                android:textAppearance="@style/TextAppearance.Medium"/>
+
+            <TextView
+                android:id="@id/group_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_name"
+                android:layout_marginTop="@dimen/layout_inner_padding_vertical_small"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="We just different with others"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_des"
+                android:id="@id/group_ic_app_num"
+                android:layout_marginTop="@dimen/layout_inner_padding_vertical_small"
+                android:src="@drawable/ic_android_small"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@id/group_app_num"
+                android:text="90"
+                android:layout_alignBottom="@id/group_ic_app_num"
+                android:layout_toRightOf="@id/group_ic_app_num"
+                android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+                android:textAppearance="@style/TextAppearance.Small"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@id/divider"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:layout_alignBottom="@id/group_ic_app_num"
+                android:textAppearance="@style/TextAppearance.Small"
+                android:layout_toRightOf="@id/group_app_num"
+                android:layout_marginLeft="20dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_avatar_default"
+                android:layout_marginLeft="20dp"
+                android:id="@id/group_ic_my_app_num"
+                android:layout_alignBottom="@id/group_ic_app_num"
+                android:layout_toRightOf="@id/divider"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#6FC275"
+                android:layout_toRightOf="@id/group_ic_my_app_num"
+                android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+                android:id="@id/group_my_app_in_group_num"
+                android:layout_alignBottom="@id/group_ic_my_app_num"
+                android:text="33"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"/>
+</android.support.v7.widget.CardView>

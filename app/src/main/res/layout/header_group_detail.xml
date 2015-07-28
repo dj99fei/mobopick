@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/layout_inner_padding_horizontal"
+    android:paddingRight="@dimen/layout_inner_padding_horizontal"
+    >
+
+    <LinearLayout
+        android:id="@id/group_app_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@id/group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Collegue"
+            android:textAppearance="@style/TextAppearance.Large.White"/>
+
+        <TextView
+            android:id="@id/group_member_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/group_name"
+            android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+            android:layout_toRightOf="@id/group_name"
+            android:text="(9875)"
+            android:textAppearance="@style/TextAppearance.Small"
+            android:textColor="#ddffffff"/>
+
+        <Button
+            android:id="@id/group_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+            android:layout_toRightOf="@id/group_member_num"
+            android:background="@drawable/bg_btn_done"
+            android:text="Join"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@id/group_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_app_header_title"
+        android:layout_marginTop="@dimen/layout_inner_padding_vertical"
+        android:textColor="@color/group_transparent_text"
+        android:textStyle="bold"
+        android:text="We just diffrent with others"/>
+
+    <ImageView
+        android:id="@id/group_ic_app_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_des"
+        android:layout_marginTop="@dimen/layout_padding_vertical"
+        android:src="@drawable/ic_android_small"/>
+
+    <TextView
+        android:id="@id/group_app_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/group_transparent_text"
+        android:layout_alignBottom="@id/group_ic_app_num"
+        android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+        android:layout_toRightOf="@id/group_ic_app_num"
+        android:text="989"
+        android:textAppearance="@style/TextAppearance.Small.White"/>
+
+    <ImageView
+        android:id="@id/group_ic_my_app_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/group_app_num"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@id/group_app_num"
+        android:src="@drawable/ic_avatar_default"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/group_ic_my_app_num"
+        android:layout_marginLeft="@dimen/layout_inner_padding_horizontal_small"
+        android:layout_toRightOf="@id/group_ic_my_app_num"
+        android:text="I had 34"
+        android:id="@id/group_my_app_in_group_num"
+        android:textColor="@color/group_transparent_text"
+        android:textAppearance="@style/TextAppearance.Small.White"/>
+
+    <TextView
+        android:id="@id/group_detail_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_app_num"
+        android:layout_marginTop="@dimen/layout_padding_vertical"
+        android:text="@string/group_detail_des"
+        android:textAppearance="@style/TextAppearance.Small.White"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/group_radio_height"
+        android:layout_below="@id/group_detail_des"
+        android:layout_marginTop="@dimen/layout_padding_vertical"/>
+
+
+</RelativeLayout>

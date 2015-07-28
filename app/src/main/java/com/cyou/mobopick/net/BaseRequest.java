@@ -1,9 +1,11 @@
 package com.cyou.mobopick.net;
 
+import android.text.TextUtils;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
 import com.cyou.mobopick.util.LogUtils;
@@ -13,7 +15,6 @@ import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -42,9 +43,8 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
             T result = parseResponse(jsonString);
             return Response.success(result, HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
-            LogUtils.d(TAG, jsonString);
-            LogUtils.e(TAG, e);
-            return Response.error(new ParseError(e));
+            String error = TextUtils.isEmpty(e.getMessage()) ? "Error" : e.getMessage();
+            return Response.error(new VolleyError(error));
         }
     }
 
@@ -52,39 +52,6 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
         T a = null;
         Gson gson = new Gson();
         return (T) gson.fromJson(jsonString, a.getClass());
-    }
-
-
-    public static class UrlBuilder {
-        String base;
-
-        Map<String, String> params;
-
-
-        public UrlBuilder() {
-            this.base = BASE_URL;
-        }
-        public UrlBuilder(String base) {
-            this.base = base;
-            params = new HashMap<String, String>();
-        }
-
-        public UrlBuilder addParam(String key, String value) {
-            params.put(key, value);
-            return this;
-        }
-
-        public String create() {
-            StringBuilder builder = new StringBuilder(base);
-            builder.append("?");
-            for (Map.Entry<String, String> entry : params.entrySet()) {
-                builder.append(entry.getKey());
-                builder.append(entry.getValue());
-                builder.append("&");
-            }
-            builder.deleteCharAt(builder.length() - 1);
-            return builder.toString();
-        }
     }
 
         @Override
@@ -127,5 +94,16 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     }
 
 
+    public static class Params {
+        public static final String PAGE_CURRENT = "pagecurrent";
+        public static final String PAGESIZE = "pagesize";
+        public static final String UUID = "uuid";
+        public static final String GROUP_NAME = "group_name";
+        public static final String GROUP_ID = "group_id";
+        public static final String GROUP_DESCRIPTION = "group_description";
+        public static final String GROUP_APPS_COUNT = "group_apps_count";
+        public static final String USER_GROUP_APPS_COUNT = "user_group_apps_count";
+        public static final String GROUP_MEM_COUNT = "group_users_count";
 
+    }
 }

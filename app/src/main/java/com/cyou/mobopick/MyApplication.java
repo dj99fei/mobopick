@@ -24,6 +24,10 @@ public class MyApplication extends Application {
 
         CheckUpdateHelper.getInstance().check();
         UploadUserInfoHelper.getInstance().upload();
+//        TwitterAuthConfig authConfig =
+//                new TwitterAuthConfig("ZfOmIG604MYPSL9Uwn6s8xLC9", "prGmFModqnYiRVs91X4cN6XCPiEZ1SO970dO2bHXZKT9GybhLC");
+//        Fabric.with(this, new TwitterCore(authConfig), new Digits());
+
     }
 
 

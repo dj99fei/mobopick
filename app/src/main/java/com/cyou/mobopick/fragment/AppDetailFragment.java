@@ -176,7 +176,7 @@ public class AppDetailFragment extends BaseFragment implements NetworkRequestLis
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
-            final int clickedChild = recyclerView.indexOfChild(view) + ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+            final int clickedChild = recyclerView.indexOfChild(view);
 //            return true;
             if (recyclerView.getId() == R.id.recyclerview_emoji_comment) {
                 AppModel.EmojiComment comment = emojiComments.get(clickedChild);

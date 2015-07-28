@@ -10,10 +10,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cyou.mobopick.MyApplication;
 import com.cyou.mobopick.R;
+import com.cyou.mobopick.bus.DownloadStartEvent;
 import com.cyou.mobopick.providers.DownloadManager;
 import com.cyou.mobopick.providers.downloads.Downloads;
 import com.cyou.mobopick.util.AppTheme;
@@ -32,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by chengfei on 14-10-6.
@@ -81,6 +85,10 @@ public class AppModel implements Parcelable {
 
     @SerializedName(value = "filesize")
     public String size;
+
+    public int groupMemberNum;
+
+    public int installedMemberNum;
 
 
     /**
@@ -361,7 +369,7 @@ public class AppModel implements Parcelable {
         Cursor cursor = downloadManager.query(baseQuery);
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                if (downloadUrl.equals(cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI)))) {
+                if (downloadUrl != null && downloadUrl.equals(cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI)))) {
                     status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
                     LogUtils.d(TAG, "status = %s", status);
                     String localUriStr = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
@@ -391,6 +399,10 @@ public class AppModel implements Parcelable {
         return true;
     }
 
+    public boolean isDownloading() {
+        return status == DownloadManager.STATUS_RUNNING || status == DownloadManager.STATUS_PENDING;
+    }
+
     public boolean isInstalled() {
         if (TextUtils.isEmpty(DeviceInfo.apps) || TextUtils.isEmpty(packageName))
             return false;
@@ -410,10 +422,25 @@ public class AppModel implements Parcelable {
         }
         if (isInstalled()) {
             imageView.setImageResource(R.drawable.ic_open);
+        } else if (isDownloading()) {
+            EventBus.getDefault().post(new DownloadStartEvent(downloadUrl));
         } else if (isDownloaded()) {
             imageView.setImageResource(R.drawable.ic_install);
         } else {
             imageView.setImageResource(R.drawable.ic_download);
+        }
+    }
+
+    public void setActionText(TextView textView, boolean forceRefresh) {
+        if (!queryed || forceRefresh) {
+            query();
+        }
+        if (isInstalled()) {
+            textView.setText(R.string.open);
+        } else if (isDownloaded()) {
+            textView.setText(R.string.install);
+        } else {
+            textView.setText(R.string.download);
         }
     }
 
@@ -454,5 +481,37 @@ public class AppModel implements Parcelable {
         request.setPackageName(packageName);
         request.setDescription(getIconUrl());
         downloadManager.enqueue(request);
+        EventBus.getDefault().post(new DownloadStartEvent(url));
+    }
+
+
+    public String getInstallRateStr() {
+        return new StringBuilder().append(installedMemberNum).append(" / ").append(groupMemberNum).toString();
+    }
+
+
+    public AppModel cloneAppModel() {
+        AppModel appModel = new AppModel();
+        appModel.content = content;
+        appModel.packageName = packageName;
+        appModel.groupMemberNum = groupMemberNum;
+        appModel.installedMemberNum = installedMemberNum;
+        appModel.title = title;
+        return appModel;
+    }
+
+
+    public String getTitle() {
+        if (TextUtils.isEmpty(title) || "null".equals(title)) {
+            return packageName;
+        }
+        return title;
+    }
+
+    public String getTags() {
+        if (TextUtils.isEmpty(tags) || "null".equals(tags)) {
+            return "";
+        }
+        return tags;
     }
 }

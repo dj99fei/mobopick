@@ -39,7 +39,8 @@ public class DeviceInfo {
         country = tm.getNetworkCountryIso();
         ua = Build.MODEL;
         apps = getInstalledApps();
-        uuid = SharedPreferencesHelper.getInstance().withKey(R.string.key_uuid).get(int.class, 0);
+        uuid = SharedPreferencesHelper.getInstance().withKey(R.string.key_uuid).get(int.class, -1);
+
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         density = metrics.density;
@@ -58,6 +59,7 @@ public class DeviceInfo {
     public static String lbs;
     public static String country;
     public static int uuid;
+    public static int appCount;
 
     public static float density;
     public static int screenWidth;
@@ -108,11 +110,13 @@ public class DeviceInfo {
         PackageManager pm = context.getPackageManager();
         List<PackageInfo> packs = pm.getInstalledPackages(0);
         StringBuilder packagesBuilder = new StringBuilder();
+        appCount = 0;
         for (int i = 0; i < packs.size(); i++) {
             PackageInfo p = packs.get(i);
             if (p.versionName == null) {
                 continue;
             }
+            appCount++;
             //只上传非系统应用（用户自主安装的）
             if((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0){
                 try {

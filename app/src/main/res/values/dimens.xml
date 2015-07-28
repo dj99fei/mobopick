@@ -21,9 +21,11 @@
 
 
     <dimen name="layout_inner_padding_horizontal">15dp</dimen>
+    <dimen name="layout_padding_horizontal_large">25dp</dimen>
     <dimen name="layout_inner_padding_horizontal_small">8dp</dimen>
     <dimen name="layout_inner_padding_vertical_small">6dp</dimen>
     <dimen name="layout_inner_padding_vertical">10dp</dimen>
+    <dimen name="layout_padding_vertical_large">25dp</dimen>
 
     <dimen name="layout_padding_horizontal">18dp</dimen>
     <dimen name="layout_padding_vertical">18dp</dimen>
@@ -33,4 +35,10 @@
     <dimen name="emoji_content_min_height">110dp</dimen>
     <dimen name="image_text_text_min_height">60dp</dimen>
     <dimen name="item_download_action_width">100dp</dimen>
+    <dimen name="item_drawer_height">60dp</dimen>
+
+    <dimen name="size_avatar">60dp</dimen>
+    <dimen name="size_group_image">100dp</dimen>
+    <dimen name="width_group_radio">100dp</dimen>
+    <dimen name="group_radio_height">50dp</dimen>
 </resources>

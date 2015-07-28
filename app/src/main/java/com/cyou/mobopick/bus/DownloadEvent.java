@@ -1,10 +1,10 @@
 package com.cyou.mobopick.bus;
 
 /**
- * Created by chengfei on 14/11/7.
+ * Created by chengfei on 14/11/14.
  */
 public class DownloadEvent {
-    private String url;
+    protected String url;
 
     public DownloadEvent(String url) {
         this.url = url;

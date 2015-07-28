@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:background="@drawable/item_drawer_selector"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@id/item_action"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_drawer_height"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/layout_inner_padding_horizontal"
+        android:drawablePadding="@dimen/layout_inner_padding_horizontal_small"
+        android:textAppearance="@style/TextAppearance.Medium.White"
+        android:paddingRight="@dimen/layout_inner_padding_horizontal"
+        android:text="test"/>
+</LinearLayout>

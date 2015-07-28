@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.cyou.mobopick.R;
 import com.cyou.mobopick.adapter.DownloadAdapter;
+import com.cyou.mobopick.bus.UpdateActionBarEvent;
 import com.cyou.mobopick.domain.DeviceInfo;
 import com.cyou.mobopick.providers.DownloadManager;
 import com.cyou.mobopick.providers.downloads.ui.DownloadItem;
@@ -110,6 +112,12 @@ public class DownloadListFragment extends BaseFragment implements DialogInterfac
         deleteButton.setOnClickListener(this);
 //        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 //        listView.setMultiChoiceModeListener(this);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setActionBar();
     }
 
     /**
@@ -330,6 +338,14 @@ public class DownloadListFragment extends BaseFragment implements DialogInterfac
         return super.onOptionsItemSelected(item);
     }
 
+    private void setActionBar() {
+        if (isVisible()) {
+            bar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+            bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_HOME_AS_UP);
+            bar.setTitle(R.string.downloads);
+        }
+    }
+
     private ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
@@ -444,6 +460,10 @@ public class DownloadListFragment extends BaseFragment implements DialogInterfac
             }
         }
         return idArray;
+    }
+
+    public void onEventMainThread(UpdateActionBarEvent event) {
+        setActionBar();
     }
 }
 
